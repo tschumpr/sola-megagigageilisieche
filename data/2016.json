@@ -1,0 +1,107 @@
+{
+    "runs": [
+      {
+        "track": 1,
+        "name": "Livia Britschgi",
+        "distance": 3.9,
+        "time": "00:24:20",
+        "rank": 804
+      },
+      {
+        "track": 2,
+        "name": "Dave Küchler",
+        "distance": 13.9,
+        "time": "01:01:49",
+        "rank": 263
+      },
+      {
+        "track": 3,
+        "name": "Philipp Lütolf",
+        "distance": 6.2,
+        "time": "00:34:13",
+        "rank": 185
+      },
+      {
+        "track": 4,
+        "name": "Mirjam Brändle",
+        "distance": 5.9,
+        "time": "00:28:13",
+        "rank": 211
+      },
+      {
+        "track": 5,
+        "name": "Raphi Schalbetter",
+        "distance": 13.9,
+        "time": "01:09:19",
+        "rank": 463
+      },
+      {
+        "track": 6,
+        "name": "Benji Kramis",
+        "distance": 10.6,
+        "time": "00:56:59",
+        "rank": 451
+      },
+      {
+        "track": 7,
+        "name": "Leandra Liniger",
+        "distance": 4.4,
+        "time": "00:26:20",
+        "rank": 687
+      },
+      {
+        "track": 8,
+        "name": "Cyrill Zemp",
+        "distance": 6.3,
+        "time": "00:41:37",
+        "rank": 888
+      },
+      {
+        "track": 9,
+        "name": "David Studer",
+        "distance": 11.3,
+        "time": "00:55:23",
+        "rank": 261
+      },
+      {
+        "track": 10,
+        "name": "Roswita Tschümperlin",
+        "distance": 8.7,
+        "time": "00:44:57",
+        "rank": 303
+      },
+      {
+        "track": 11,
+        "name": "Nemro Kubli",
+        "distance": 12.6,
+        "time": "01:06:45",
+        "rank": 441
+      },
+      {
+        "track": 12,
+        "name": "Cedric Dind",
+        "distance": 6.9,
+        "time": "00:30:58",
+        "rank": 307
+      },
+      {
+        "track": 13,
+        "name": "Lorenz Schmid",
+        "distance": 4.9,
+        "time": "00:23:35",
+        "rank": 316
+      },
+      {
+        "track": 14,
+        "name": "Döme Meier",
+        "distance": 5.6,
+        "time": "00:28:29",
+        "rank": 558
+      }
+    ],
+    "total": {
+      "time": "09:53:00",
+      "rank": 280
+    }
+  }
+  

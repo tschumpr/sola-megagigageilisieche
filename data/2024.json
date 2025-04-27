@@ -1,0 +1,107 @@
+{
+    "runs": [
+      {
+        "track": 1,
+        "name": "Maia Kleiner",
+        "distance": 3.6,
+        "time": "00:20:58",
+        "rank": 541
+      },
+      {
+        "track": 2,
+        "name": "Raphi Schalbetter",
+        "distance": 13.7,
+        "time": "00:46:47",
+        "rank": 13
+      },
+      {
+        "track": 3,
+        "name": "Sales Indergand",
+        "distance": 5.9,
+        "time": "00:35:57",
+        "rank": 236
+      },
+      {
+        "track": 4,
+        "name": "Roxana Zehtabchi",
+        "distance": 5.8,
+        "time": "00:31:18",
+        "rank": 368
+      },
+      {
+        "track": 5,
+        "name": "Stefan Schönenberger",
+        "distance": 13.9,
+        "time": "01:00:48",
+        "rank": 131
+      },
+      {
+        "track": 6,
+        "name": "Timo Wicki",
+        "distance": 10.4,
+        "time": "00:47:19",
+        "rank": 177
+      },
+      {
+        "track": 7,
+        "name": "Helena Burch",
+        "distance": 4.5,
+        "time": "00:25:19",
+        "rank": 529
+      },
+      {
+        "track": 8,
+        "name": "Cedric Dind",
+        "distance": 6.2,
+        "time": "00:34:35",
+        "rank": 411
+      },
+      {
+        "track": 9,
+        "name": "Lorenz Schmid",
+        "distance": 11.1,
+        "time": "00:54:42",
+        "rank": 267
+      },
+      {
+        "track": 10,
+        "name": "Roswita Tschümperlin",
+        "distance": 8.6,
+        "time": "00:45:38",
+        "rank": 626
+      },
+      {
+        "track": 11,
+        "name": "Benji Kramis",
+        "distance": 12.6,
+        "time": "01:04:02",
+        "rank": 327
+      },
+      {
+        "track": 12,
+        "name": "Irina Tschümperlin",
+        "distance": 6.3,
+        "time": "00:30:49",
+        "rank": 285
+      },
+      {
+        "track": 13,
+        "name": "Andris Wyss",
+        "distance": 4.6,
+        "time": "00:19:19",
+        "rank": 37
+      },
+      {
+        "track": 14,
+        "name": "Döme Meier",
+        "distance": 5.6,
+        "time": "00:30:31",
+        "rank": 574
+      }
+    ],
+    "total": {
+      "time": "09:07:56",
+      "rank": 90
+    }
+  }
+  

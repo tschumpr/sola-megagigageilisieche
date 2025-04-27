@@ -1,0 +1,107 @@
+{
+    "runs": [
+      {
+        "track": 1,
+        "name": "Maia Kleiner",
+        "distance": 3.7,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 2,
+        "name": "Adi Schalbetter",
+        "distance": 13.8,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 3,
+        "name": "Nemro Kubli",
+        "distance": 5.9,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 4,
+        "name": "Andris Wyss",
+        "distance": 5.9,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 5,
+        "name": "Stefan Schönenberger",
+        "distance": 14.1,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 6,
+        "name": "Benji Kramis",
+        "distance": 10.5,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 7,
+        "name": "Christian Isler",
+        "distance": 4.5,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 8,
+        "name": "Cedric Dind",
+        "distance": 6.4,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 9,
+        "name": "Peter Tschümperlin",
+        "distance": 11.2,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 10,
+        "name": "Annina Battaglia",
+        "distance": 8.5,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 11,
+        "name": "Raphi Schalbetter",
+        "distance": 12.4,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 12,
+        "name": "Roswita Tschümperlin",
+        "distance": 6.9,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 13,
+        "name": "Helena Burch",
+        "distance": 4.7,
+        "time": null,
+        "rank": null
+      },
+      {
+        "track": 14,
+        "name": "Gabriel Hottiger",
+        "distance": 5.5,
+        "time": null,
+        "rank": null
+      }
+    ],
+    "total": {
+      "time": null,
+      "rank": null
+    }
+  }
+  
