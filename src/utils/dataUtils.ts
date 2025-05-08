@@ -12,7 +12,7 @@ export const loadAllYearData = async (): Promise<YearData[]> => {
   const years = Array.from({ length: 11 }, (_, i) => 2014 + i);
   const dataPromises = years.map(async (year) => {
     try {
-      const response = await fetch(`/data/${year}.json`, {
+      const response = await fetch(`${import.meta.env.BASE_URL}data/${year}.json`, {
         headers: {
           'Cache-Control': 'no-cache',
         },
