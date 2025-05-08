@@ -2,49 +2,49 @@
     "runs": [
       {
         "track": 1,
-        "name": "Helena Burch",
+        "name": "Maia Kleiner",
         "distance": 3.7,
-        "time": "00:21:54",
-        "rank": 639
+        "time": null,
+        "rank": null
       },
       {
         "track": 2,
-        "name": "Andris Wyss",
+        "name": "Adi Schalbetter",
         "distance": 13.8,
-        "time": "00:59:23",
-        "rank": 235
+        "time": null,
+        "rank": null
       },
       {
         "track": 3,
-        "name": "Len Lüdin",
+        "name": "Nemro Kubli",
         "distance": 5.9,
-        "time": "00:32:44",
-        "rank": 103
+        "time": null,
+        "rank": null
       },
       {
         "track": 4,
-        "name": "Manuel Luck",
+        "name": "Andris Wyss",
         "distance": 5.9,
-        "time": "00:27:17",
-        "rank": 127
+        "time": null,
+        "rank": null
       },
       {
         "track": 5,
-        "name": "Raphi Schalbetter",
+        "name": "Stefan Schönenberger",
         "distance": 14.1,
-        "time": "00:58:06",
-        "rank": 65
+        "time": null,
+        "rank": null
       },
       {
         "track": 6,
         "name": "Benji Kramis",
         "distance": 10.5,
-        "time": "00:50:23",
-        "rank": 267
+        "time": null,
+        "rank": null
       },
       {
         "track": 7,
-        "name": "Laura Buchmann",
+        "name": "Christian Isler",
         "distance": 4.5,
         "time": null,
         "rank": null
@@ -53,55 +53,56 @@
         "track": 8,
         "name": "Cedric Dind",
         "distance": 6.4,
-        "time": "00:31:36",
-        "rank": 268
+        "time": null,
+        "rank": null
       },
       {
         "track": 9,
-        "name": "Gabriel Hottiger",
+        "name": "Peter Tschümperlin",
         "distance": 11.2,
-        "time": "00:54:05",
-        "rank": 254
+        "time": null,
+        "rank": null
       },
       {
         "track": 10,
-        "name": "Roswita Tschümperlin",
+        "name": "Annina Battaglia",
         "distance": 8.5,
-        "time": "00:41:35",
-        "rank": 198
+        "time": null,
+        "rank": null
       },
       {
         "track": 11,
-        "name": "Stefan Schönenberger",
+        "name": "Raphi Schalbetter",
         "distance": 12.4,
-        "time": "00:55:29",
-        "rank": 93
+        "time": null,
+        "rank": null
       },
       {
         "track": 12,
-        "name": "Nemro Kubli",
+        "name": "Roswita Tschümperlin",
         "distance": 6.9,
-        "time": "00:30:23",
-        "rank": 315
+        "time": null,
+        "rank": null
       },
       {
         "track": 13,
-        "name": "Lorenz Schmid",
+        "name": "Helena Burch",
         "distance": 4.7,
-        "time": "00:20:55",
-        "rank": 118
+        "time": null,
+        "rank": null
       },
       {
         "track": 14,
-        "name": "Döme Meier",
+        "name": "Gabriel Hottiger",
         "distance": 5.5,
-        "time": "00:27:59",
-        "rank": 514
+        "time": null,
+        "rank": null
       }
     ],
     "total": {
       "time": null,
-      "rank": null
+      "rank": null,
+      "category": "Langsam"
     }
   }
   
