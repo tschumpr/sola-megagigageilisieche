@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { FC, useState, useMemo } from 'react';
 import {
   Table,
   TableBody,
@@ -28,7 +28,7 @@ interface StatisticsProps {
 type SortField = 'name' | 'totalDistance' | 'totalTime' | 'participationCount' | 'completedRaces' | 'disqualifiedRaces' | 'bestRank' | 'averageRank';
 type SortOrder = 'asc' | 'desc';
 
-export const Statistics: React.FC<StatisticsProps> = ({ participantStats, teamStats }) => {
+export const Statistics: FC<StatisticsProps> = ({ participantStats, teamStats }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');

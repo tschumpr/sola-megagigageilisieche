@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { FC, useState, useMemo } from 'react';
 import {
   Box,
   Typography,
@@ -14,7 +14,7 @@ import {
   TableSortLabel,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import { ParticipantStats, Race } from '../types';
+import { ParticipantStats } from '../types';
 
 interface ParticipantDetailsProps {
   participant: ParticipantStats;
@@ -24,7 +24,7 @@ interface ParticipantDetailsProps {
 type SortField = 'year' | 'track' | 'distance' | 'time' | 'rank';
 type SortOrder = 'asc' | 'desc';
 
-export const ParticipantDetails: React.FC<ParticipantDetailsProps> = ({ participant, onBack }) => {
+export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant, onBack }) => {
   const [sortField, setSortField] = useState<SortField>('year');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
