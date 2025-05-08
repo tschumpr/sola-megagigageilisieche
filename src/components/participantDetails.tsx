@@ -125,7 +125,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant, o
           </Box>
           <Box>
             <Typography variant="subtitle2" color="text.secondary">Durchschnittlicher Rang</Typography>
-            <Typography variant="h6">{participant.averageRank?.toFixed(1) ?? '-'}</Typography>
+            <Typography variant="h6">{participant.averageRank?.toFixed(0) ?? '-'}</Typography>
           </Box>
         </Box>
       </Paper>
