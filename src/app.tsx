@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { CssBaseline, ThemeProvider, createTheme, CircularProgress, Box, Stack } from '@mui/material';
+import { CssBaseline, ThemeProvider, createTheme, CircularProgress, Box } from '@mui/material';
 import { Statistics } from './components/statistics';
 import { loadAllYearData, calculateParticipantStats, calculateTeamStats } from './utils/dataUtils';
 import { YearData } from './types';
@@ -8,10 +8,10 @@ const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1976d2',
+      main: '#00f100',
     },
     secondary: {
-      main: '#dc004e',
+      main: '#f50057',
     },
   },
 });
@@ -59,12 +59,10 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Stack sx={{ width: '100%', height: '100%' }}>
         <Statistics 
           participantStats={participantStats}
           teamStats={teamStats}
         />
-        </Stack>
     </ThemeProvider>
   );
 }
