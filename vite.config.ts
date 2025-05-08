@@ -11,4 +11,11 @@ export default defineConfig({
     host: true,
   },
   publicDir: 'public',
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      },
+    },
+  },
 })

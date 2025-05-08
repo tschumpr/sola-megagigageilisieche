@@ -1,20 +1,11 @@
 import { useState, useEffect } from 'react';
-import { CssBaseline, ThemeProvider, createTheme, CircularProgress, Box } from '@mui/material';
+import { Container, CssBaseline, ThemeProvider, CircularProgress, Box } from '@mui/material';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Statistics } from './components/statistics';
+import { LandingPage } from './components/landingPage';
 import { loadAllYearData, calculateParticipantStats, calculateTeamStats } from './utils/dataUtils';
 import { YearData } from './types';
-
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-    primary: {
-      main: '#00f100',
-    },
-    secondary: {
-      main: '#f50057',
-    },
-  },
-});
+import { theme } from './appTheme';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -59,10 +50,23 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-        <Statistics 
-          participantStats={participantStats}
-          teamStats={teamStats}
-        />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route 
+            path="/statistics" 
+            element={
+              <Container maxWidth="lg" sx={{ py: 4 }}>
+                <Statistics 
+                  participantStats={participantStats}
+                  teamStats={teamStats}
+                />
+              </Container>
+            } 
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
