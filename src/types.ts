@@ -13,6 +13,7 @@ export interface TeamResult {
 }
 
 export interface YearData {
+  year: number;
   runs: Run[];
   total: TeamResult;
 }

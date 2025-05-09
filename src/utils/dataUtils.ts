@@ -18,7 +18,8 @@ export const loadAllYearData = async (): Promise<YearData[]> => {
         },
       });
       if (!response.ok) throw new Error(`Failed to load ${year}.json`);
-      return response.json();
+      const data = await response.json();
+      return { ...data, year };
     } catch (error) {
       console.error(`Error loading ${year}.json:`, error);
       return null;

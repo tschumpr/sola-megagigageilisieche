@@ -6,25 +6,22 @@ import {
   Table,
   TableBody,
   TableCell,
-  TableContainer,
   TableHead,
   TableRow,
-  IconButton,
   Chip,
   TableSortLabel,
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
 import { ParticipantStats } from '../types';
+import { CommonTableContainer } from './styledComponents';
 
 interface ParticipantDetailsProps {
   participant: ParticipantStats;
-  onBack: () => void;
 }
 
 type SortField = 'year' | 'track' | 'distance' | 'time' | 'rank';
 type SortOrder = 'asc' | 'desc';
 
-export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant, onBack }) => {
+export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant }) => {
   const [sortField, setSortField] = useState<SortField>('year');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
 
@@ -76,28 +73,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant, o
 
   return (
     <Box sx={{ position: 'relative' }}>
-      <Box sx={{ 
-        position: 'sticky', 
-        top: 0, 
-        backgroundColor: 'background.paper',
-        zIndex: 1,
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        mb: 2,
-        pb: 2,
-        borderBottom: '1px solid',
-        borderColor: 'divider'
-      }}>
-        <Typography variant="h5">
-          SOLA-Rückblick von {participant.name}
-        </Typography>
-        <IconButton onClick={onBack} size="small">
-          <CloseIcon />
-        </IconButton>
-      </Box>
-
-      <Paper sx={{ p: 3, mb: 3 }}>
+      <Paper sx={{ p: 3, mb: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
         <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 2 }}>
           <Box>
             <Typography variant="subtitle2" color="text.secondary">Gesamtdistanz</Typography>
@@ -107,6 +83,16 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant, o
             <Typography variant="subtitle2" color="text.secondary">Gesamtzeit</Typography>
             <Typography variant="h6">{formatTime(participant.totalTime)}</Typography>
           </Box>
+          <Box>
+            <Typography variant="subtitle2" color="text.secondary">Bester Rang</Typography>
+            <Typography variant="h6">{participant.bestRank ?? '-'}</Typography>
+          </Box>
+          <Box>
+            <Typography variant="subtitle2" color="text.secondary">Durchschnittlicher Rang</Typography>
+            <Typography variant="h6">{participant.averageRank?.toFixed(0) ?? '-'}</Typography>
+          </Box>
+        </Box>
+        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 2 }}>
           <Box>
             <Typography variant="subtitle2" color="text.secondary">Teilnahmen</Typography>
             <Typography variant="h6">{participant.participationCount}</Typography>
@@ -119,18 +105,11 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant, o
             <Typography variant="subtitle2" color="text.secondary">Disqualifiziert</Typography>
             <Typography variant="h6">{participant.disqualifiedRaces}</Typography>
           </Box>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">Bester Rang</Typography>
-            <Typography variant="h6">{participant.bestRank ?? '-'}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">Durchschnittlicher Rang</Typography>
-            <Typography variant="h6">{participant.averageRank?.toFixed(0) ?? '-'}</Typography>
-          </Box>
+          <Box></Box>
         </Box>
       </Paper>
 
-      <TableContainer component={Paper}>
+      <CommonTableContainer>
         <Table>
           <TableHead>
             <TableRow>
@@ -201,7 +180,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant, o
             ))}
           </TableBody>
         </Table>
-      </TableContainer>
+      </CommonTableContainer>
     </Box>
   );
 }; 
