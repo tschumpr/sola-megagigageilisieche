@@ -16,6 +16,12 @@ import { CommonTableContainer } from './styledComponents';
 
 type SortField = 'year' | 'category' | 'totalTime' | 'rank';
 
+const formatTime = (timeStr: string | null): string => {
+  if (!timeStr) return '-';
+  const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+  return `${hours}h ${minutes}m ${seconds}s`;
+};
+
 export const TeamStatistics = () => {
   const { teamStats, yearData } = useData();
   const [sortField, setSortField] = useState<SortField>('year');
@@ -120,7 +126,7 @@ export const TeamStatistics = () => {
               >
                 <TableCell>{stat.year}</TableCell>
                 <TableCell>{stat.category}</TableCell>
-                <TableCell align="right">{stat.totalTime ?? '-'}</TableCell>
+                <TableCell align="right">{formatTime(stat.totalTime)}</TableCell>
                 <TableCell align="right">{stat.rank ?? '-'}</TableCell>
                 <TableCell align="right">
                   {stat.isCancelled ? (

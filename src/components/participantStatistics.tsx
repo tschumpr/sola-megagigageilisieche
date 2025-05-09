@@ -18,6 +18,13 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 type SortField = 'name' | 'totalDistance' | 'totalTime' | 'participationCount' | 'completedRaces' | 'disqualifiedRaces' | 'bestRank' | 'averageRank';
 
+const formatTime = (minutes: number): string => {
+  const hours = Math.floor(minutes / 60);
+  const mins = Math.floor(minutes % 60);
+  const secs = Math.floor((minutes * 60) % 60);
+  return `${hours}h ${mins}m ${secs}s`;
+};
+
 export const ParticipantStatistics = () => {
   const { participantStats } = useData();
   const [sortField, setSortField] = useState<SortField>('name');
@@ -203,7 +210,7 @@ export const ParticipantStatistics = () => {
               >
                 <TableCell>{stat.name}</TableCell>
                 <TableCell align="right">{stat.totalDistance.toFixed(1)}km</TableCell>
-                <TableCell align="right">{stat.totalTime.toFixed(0)}min</TableCell>
+                <TableCell align="right">{formatTime(stat.totalTime)}</TableCell>
                 <TableCell align="right">{stat.participationCount}</TableCell>
                 <TableCell align="right">{stat.completedRaces}</TableCell>
                 <TableCell align="right">{stat.disqualifiedRaces}</TableCell>
