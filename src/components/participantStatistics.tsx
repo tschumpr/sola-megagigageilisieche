@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import {
   Table,
   TableBody,
@@ -14,6 +14,7 @@ import { handleSort, SortOrder } from '../utils/tableUtils';
 import { ParticipantDetails } from './participantDetails';
 import { CommonDialog } from './commonDialog';
 import { CommonTableContainer } from './styledComponents';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 type SortField = 'name' | 'totalDistance' | 'totalTime' | 'participationCount' | 'completedRaces' | 'disqualifiedRaces' | 'bestRank' | 'averageRank';
 
@@ -21,8 +22,26 @@ export const ParticipantStatistics = () => {
   const { participantStats } = useData();
   const [sortField, setSortField] = useState<SortField>('name');
   const [sortOrder, setSortOrder] = useState<SortOrder>('asc');
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedParticipant, setSelectedParticipant] = useState<string | null>(null);
+
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    if (value) {
+      navigate({ pathname: location.pathname, hash: 'participants', search: `?search=${value}` }, { replace: true });
+    } else {
+      navigate({ pathname: location.pathname, hash: 'participants', search: '' }, { replace: true });
+    }
+  };
+
+  useEffect(() => {
+    const search = searchParams.get('search');
+    if (search) {
+      setSearchTerm(search);
+    }
+  }, []);
 
   const handleRowClick = (name: string) => {
     setSelectedParticipant(name);
@@ -90,7 +109,7 @@ export const ParticipantStatistics = () => {
           size="small"
           color='secondary'
           value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => handleSearchChange(e.target.value)}
           fullWidth
         />
       </Stack>
