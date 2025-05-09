@@ -1,117 +1,81 @@
-# React + TypeScript + Vite
+# Megagigageili Siechä - SOLA-Resultate
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-
-# Race Dashboard
-
-A dashboard application that displays statistics for race results, including team and individual participant data.
+A web application to view and analyze statistics from the SOLA relay race.
 
 ## Features
 
-- Team statistics by year (total time, rank, category)
-- Individual participant statistics (total distance, total time, participation count)
-- Handling of special cases (cancelled races, disqualifications)
-- Modern, responsive UI using Material-UI
-- Automatic deployment to GitHub Pages
+- View team statistics including:
+  - Year-by-year performance
+  - Category information
+  - Race times and rankings
+  - Success/disqualification status
+  - Detailed run information for each year
+
+- View participant statistics including:
+  - Total distance and time
+  - Participation count
+  - Success and disqualification rates
+  - Best and average rankings
+  - Detailed race history for each participant
+
+- Interactive features:
+  - Sortable tables
+  - Search functionality
+  - Detailed views for teams and participants
+  - Captcha protection for statistics access
 
 ## Development
 
-1. Install dependencies:
+### Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+
+### Setup
+
+1. Clone the repository
+2. Install dependencies:
    ```bash
    npm install
+   # or
+   yarn install
    ```
-
-2. Start the development server:
+3. Start the development server:
    ```bash
    npm run dev
+   # or
+   yarn dev
    ```
 
-3. Build for production:
-   ```bash
-   npm run build
-   ```
+### Building for Production
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+The build output will be in the `dist` directory.
 
 ## Deployment
 
-The application is automatically deployed to GitHub Pages when changes are pushed to the main branch. The deployment process is handled by GitHub Actions.
+The application is automatically deployed to GitHub Pages when changes are pushed to the main branch. The deployment is handled by GitHub Actions.
 
 ## Data Structure
 
-The application expects JSON files in the `public/data/` directory with the following structure:
+The application expects JSON data files in the following structure:
 
-```json
-{
-  "runs": [
-    {
-      "track": number,
-      "name": string,
-      "distance": number,
-      "time": string | null,
-      "rank": number | null
-    }
-  ],
-  "total": {
-    "time": string | null,
-    "rank": number | null,
-    "category": string
-  }
-}
-```
+- `public/data/YYYY.json` - Year data files containing:
+  - Team information
+  - Individual run data
+  - Category information
+  - Results and rankings
 
-Each file should be named according to the year (e.g., `2024.json`).
+## Technologies Used
 
-## Special Cases
-
-- When both `time` and `rank` are null in a track, it indicates a cancelled race
-- When `time` is null but `rank` is present in the total, it indicates a disqualification
+- React
+- TypeScript
+- Material-UI
+- Vite
+- React Router
+- GitHub Actions for CI/CD
