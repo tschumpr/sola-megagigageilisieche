@@ -16,7 +16,7 @@
       },
       {
         "track": 3,
-        "name": "Len Lüdin",
+        "name": "Ken Lüdin",
         "distance": 5.9,
         "time": "00:32:44",
         "rank": 103
@@ -30,14 +30,14 @@
       },
       {
         "track": 5,
-        "name": "Raphi Schalbetter",
+        "name": "Raphael Schalbetter",
         "distance": 14.1,
         "time": "00:58:06",
         "rank": 65
       },
       {
         "track": 6,
-        "name": "Benji Kramis",
+        "name": "Benjamin Kramis",
         "distance": 10.5,
         "time": "00:50:23",
         "rank": 267
@@ -93,7 +93,7 @@
       },
       {
         "track": 14,
-        "name": "Döme Meier",
+        "name": "Dominique Meier",
         "distance": 5.5,
         "time": "00:27:59",
         "rank": 514
