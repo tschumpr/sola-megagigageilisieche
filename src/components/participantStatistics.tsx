@@ -16,7 +16,7 @@ import { CommonDialog } from './commonDialog';
 import { CommonTableContainer } from './styledComponents';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-type SortField = 'name' | 'totalDistance' | 'totalTime' | 'participationCount' | 'completedRaces' | 'disqualifiedRaces' | 'bestRank' | 'averageRank';
+type SortField = 'name' | 'totalDistance' | 'totalTime' | 'participationCount' | 'completedRaces' | 'disqualifiedRaces' | 'bestRank' | 'averageRank' | 'tracks';
 
 const formatTime = (minutes: number): string => {
   const hours = Math.floor(minutes / 60);
@@ -102,6 +102,14 @@ export const ParticipantStatistics = () => {
             else if (b.averageRank === null) comparison = -1;
             else comparison = a.averageRank - b.averageRank;
             break;
+          case 'tracks':
+            const aTracks = [...new Set(a.races.map(r => r.track))].sort((x, y) => x - y);
+            const bTracks = [...new Set(b.races.map(r => r.track))].sort((x, y) => x - y);
+            comparison = aTracks.length - bTracks.length;
+            if (comparison === 0) {
+              comparison = aTracks[0] - bTracks[0];
+            }
+            break;
         }
         return sortOrder === 'asc' ? comparison : -comparison;
       });
@@ -180,6 +188,15 @@ export const ParticipantStatistics = () => {
               </TableCell>
               <TableCell align="right">
                 <TableSortLabel
+                  active={sortField === 'tracks'}
+                  direction={sortField === 'tracks' ? sortOrder : 'asc'}
+                  onClick={() => handleSort('tracks', sortField, sortOrder, setSortField, setSortOrder)}
+                >
+                  Strecken
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="right">
+                <TableSortLabel
                   active={sortField === 'bestRank'}
                   direction={sortField === 'bestRank' ? sortOrder : 'asc'}
                   onClick={() => handleSort('bestRank', sortField, sortOrder, setSortField, setSortOrder)}
@@ -214,6 +231,7 @@ export const ParticipantStatistics = () => {
                 <TableCell align="right">{stat.participationCount}</TableCell>
                 <TableCell align="right">{stat.completedRaces}</TableCell>
                 <TableCell align="right">{stat.disqualifiedRaces}</TableCell>
+                <TableCell align="right">{[...new Set(stat.races.map(r => r.track))].sort((a, b) => a - b).join(', ')}</TableCell>
                 <TableCell align="right">{stat.bestRank ?? '-'}</TableCell>
                 <TableCell align="right">{stat.averageRank ?? '-'}</TableCell>
               </TableRow>
