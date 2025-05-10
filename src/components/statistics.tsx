@@ -44,7 +44,7 @@ export const Statistics = () => {
   };
 
   return (
-    <Stack height="100vh" overflow="hidden">
+    <Stack height="calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom))" overflow="hidden">
       <Stack
         sx={{
           width: '100%',
