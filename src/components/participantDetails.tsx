@@ -245,7 +245,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
       </CommonTableContainer>
 
       {trackProgressions.length > 0 && (
-        <Box sx={{ mt: 3 }}>
+        <Box sx={{ my: 3 }}>
           <Typography variant="h6" sx={{ mb: 2 }}>Streckenverlauf</Typography>
           <Box sx={{ 
             display: 'flex', 
@@ -265,7 +265,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
                 <Typography variant="subtitle1" sx={{ mb: 1 }}>Strecke {track}</Typography>
                 <Box sx={{ flex: 1, minHeight: 0 }}>
                   <ResponsiveContainer>
-                    <ComposedChart data={data} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                    <ComposedChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
                       <CartesianGrid strokeDasharray="3 3" />
                       <XAxis 
                         dataKey="year" 
