@@ -1,11 +1,5 @@
-import { Stack, TableContainer } from "@mui/material";
+import { TableContainer } from "@mui/material";
 import { styled } from "@mui/material/styles";
-
-export const StatsContent = styled(Stack)(({ theme }) => ({
-    padding: theme.spacing(2),
-    backgroundColor: 'rgb(255, 255, 255)',
-    height: '100%',
-}));
 
 export const CommonTableContainer = styled(TableContainer)(({ theme }) => ({
     border: `1px solid ${theme.palette.divider}`,
