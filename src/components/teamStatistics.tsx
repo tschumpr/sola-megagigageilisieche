@@ -7,12 +7,27 @@ import {
   TableRow,
   Chip,
   TableSortLabel,
+  Paper,
+  Box,
+  useTheme,
 } from '@mui/material';
+import {
+  ComposedChart,
+  Line,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts';
 import { useData } from './dataContext';
 import { handleSort, SortOrder } from '../utils/tableUtils';
 import { RaceDetails } from './raceDetails';
 import { CommonDialog } from './commonDialog';
 import { CommonTableContainer } from './styledComponents';
+import { timeToMinutes } from '../utils/dataUtils';
 
 type SortField = 'year' | 'category' | 'totalTime' | 'rank';
 
@@ -24,6 +39,7 @@ const formatTime = (timeStr: string | null): string => {
 
 export const TeamStatistics = () => {
   const { teamStats, yearData } = useData();
+  const theme = useTheme();
   const [sortField, setSortField] = useState<SortField>('year');
   const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
@@ -69,8 +85,71 @@ export const TeamStatistics = () => {
     });
   }, [teamStats, sortField, sortOrder]);
 
+  const chartData = useMemo(() => {
+    return teamStats
+      .filter(stat => !stat.isCancelled && !stat.isDisqualified)
+      .sort((a, b) => a.year - b.year) // Always sort by year ascending
+      .map(stat => ({
+        year: stat.year,
+        time: stat.totalTime ? timeToMinutes(stat.totalTime) : null,
+        rank: stat.rank,
+        timeFormatted: stat.totalTime ? formatTime(stat.totalTime) : null,
+      }));
+  }, [teamStats]); // Only depend on teamStats, not sortedStats
+
+  const formatTooltipTime = (value: number) => {
+    if (!value) return '-';
+    const hours = Math.floor(value / 60);
+    const minutes = Math.floor(value % 60);
+    const seconds = Math.floor((value * 60) % 60);
+    return `${hours}h ${minutes}m ${seconds}s`;
+  };
+
+  const formatAxisTime = (value: number) => {
+    const hours = Math.floor(value / 60);
+    const minutes = Math.floor(value % 60);
+    return `${hours}:${minutes.toString().padStart(2, '0')}`;
+  };
+
+  // Calculate min and max time for the axis
+  const timeRange = useMemo(() => {
+    const times = chartData.map(d => d.time).filter((t): t is number => t !== null);
+    if (times.length === 0) return { min: 480, max: 600 }; // Default 8-10 hours
+    const min = Math.floor(Math.min(...times) / 30) * 30; // Round down to nearest 30 minutes
+    const max = Math.ceil(Math.max(...times) / 30) * 30; // Round up to nearest 30 minutes
+    return { min, max };
+  }, [chartData]);
+
   return (
     <>
+      <Paper sx={{ p: 2, mb: 2 }}>
+        <Box sx={{ width: '100%', height: 250 }}>
+          <ResponsiveContainer>
+            <ComposedChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="year" />
+              <YAxis 
+                yAxisId="left" 
+                orientation="left" 
+                label={{ value: 'Zeit', angle: -90, position: 'insideLeft' }}
+                domain={[timeRange.min, timeRange.max]}
+                tickFormatter={formatAxisTime}
+              />
+              <YAxis yAxisId="right" orientation="right" label={{ value: 'Rang', angle: 90, position: 'insideRight' }} />
+              <Tooltip 
+                formatter={(value: any, name: string) => {
+                  if (name === 'Zeit') return formatTooltipTime(value);
+                  return value;
+                }}
+              />
+              <Legend />
+              <Bar yAxisId="right" dataKey="rank" name="Rang" fill={theme.palette.primary.main} />
+              <Line yAxisId="left" type="monotone" dataKey="time" name="Zeit" stroke={theme.palette.secondary.main} strokeWidth={2} />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </Box>
+      </Paper>
+
       <CommonTableContainer>
         <Table stickyHeader>
           <TableHead>

@@ -13,3 +13,12 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.recharts-text, .recharts-legend-item-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+}
+
+.recharts-cartesian-axis-tick-value {
+  font-size: 12px;
+}
