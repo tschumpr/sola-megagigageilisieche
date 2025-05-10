@@ -3,7 +3,7 @@ import { styled } from "@mui/material/styles";
 
 export const StatsContent = styled(Stack)(({ theme }) => ({
     padding: theme.spacing(2),
-    backgroundColor: '#ffffff',
+    backgroundColor: 'rgb(255, 255, 255)',
     height: '100%',
 }));
 
@@ -25,7 +25,7 @@ export const CommonTableContainer = styled(TableContainer)(({ theme }) => ({
         fontWeight: 'bold',
     },
     '& .MuiTableBody-root .MuiTableRow-root:hover': {
-        backgroundColor: `${theme.palette.secondary.main}1A`,
+        backgroundColor: `rgba(245, 0, 87, 0.1)`,
     },
     '& .MuiTableSortLabel-root': {
         color: theme.palette.secondary.contrastText,
