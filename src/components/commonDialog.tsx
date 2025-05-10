@@ -5,6 +5,7 @@ import {
   IconButton,
   Stack,
   Typography,
+  useTheme,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -23,12 +24,27 @@ export const CommonDialog = ({
   children,
   maxWidth = 'sm'
 }: CommonDialogProps) => {
+  const theme = useTheme();
+
   return (
     <Dialog
       open={open}
       onClose={onClose}
       maxWidth={maxWidth}
       fullWidth
+      PaperProps={{
+        sx: {
+          [theme.breakpoints.down('sm')]: {
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            margin: 0,
+            width: '100%',
+            maxHeight: 'calc(100vh - 32px)',
+          }
+        }
+      }}
     >
       <DialogTitle>
         <Stack direction="row" justifyContent="space-between" alignItems="center">

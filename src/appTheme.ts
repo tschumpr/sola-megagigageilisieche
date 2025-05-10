@@ -4,25 +4,24 @@ export const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#00f100',
-      contrastText: '#000000',
+      main: 'rgb(51, 243, 51)',
+      contrastText: 'rgb(0, 0, 0)',
     },
     secondary: {
-      main: '#f50057',
-      contrastText: '#ffffff',
+      main: 'rgb(245, 0, 87)',
+      contrastText: 'rgb(255, 255, 255)',
     },
     error: {
-      main: '#ff262b',
+      main: 'rgb(255, 38, 43)',
     },
     warning: {
-      main: '#ff892e',
+      main: 'rgb(255, 137, 46)',
     },
     success: {
-      main: '#00da09',
+      main: 'rgb(0, 218, 9)',
     },
     info: {
-      main: '#00a5ff',
+      main: 'rgb(0, 165, 255)',
     },
   },
 });
-  
