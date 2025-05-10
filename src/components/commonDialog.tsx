@@ -36,12 +36,13 @@ export const CommonDialog = ({
         sx: {
           [theme.breakpoints.down('sm')]: {
             position: 'fixed',
+            top: 64,
             bottom: 0,
             left: 0,
             right: 0,
             margin: 0,
             width: '100%',
-            maxHeight: 'calc(100vh - 32px)',
+            maxHeight: 'calc(100vh - 64px)',
           }
         }
       }}
