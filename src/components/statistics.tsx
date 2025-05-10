@@ -44,7 +44,13 @@ export const Statistics = () => {
   };
 
   return (
-    <Stack height="calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom))" overflow="hidden">
+    <Stack sx={{ 
+      height: "100vh",
+      "@supports (height: 100dvh)": {
+        height: "100dvh"
+      },
+      overflow: "hidden" 
+    }}>
       <Stack
         sx={{
           width: '100%',
@@ -62,7 +68,7 @@ export const Statistics = () => {
           onChange={handleTabChange}
           textColor="secondary"
           indicatorColor="secondary"
-          sx={{ 
+          sx={{
             px: 2,
             '& .MuiTab-root': {
               fontWeight: 'bold',
