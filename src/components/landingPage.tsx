@@ -40,7 +40,10 @@ export const LandingPage: React.FC = () => {
 
   return (
     <Box sx={{
-      height: `calc(100vh - ${theme.spacing(12)} - env(safe-area-inset-top) - env(safe-area-inset-bottom))`,
+      height: `calc(100vh - ${theme.spacing(12)})`,
+      "@supports (height: 100dvh)": {
+        height: `calc(100dvh - ${theme.spacing(12)})`
+      },
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
