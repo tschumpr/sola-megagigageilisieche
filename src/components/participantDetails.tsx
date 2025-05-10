@@ -11,6 +11,7 @@ import {
   Chip,
   TableSortLabel,
   useTheme,
+  Stack,
 } from '@mui/material';
 import {
   Line,
@@ -137,65 +138,63 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
     <Box sx={{ position: 'relative' }}>
       <Paper sx={{ 
         p: 3, 
-        mb: 3, 
-        display: 'flex', 
-        flexDirection: 'column', 
-        gap: 2,
+        mb: 3,
         [theme.breakpoints.down('sm')]: {
           p: 1.5,
           mb: 2,
-          gap: 1
         }
       }}>
-        <Box sx={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-          gap: 2,
-          [theme.breakpoints.down('sm')]: {
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: 1
-          }
-        }}>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">Gesamtdistanz</Typography>
-            <Typography variant="h6">{participant.totalDistance.toFixed(1)} km</Typography>
+        <Stack spacing={2}>
+          <Box sx={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+            gap: 2,
+            [theme.breakpoints.down('sm')]: {
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: 1
+            }
+          }}>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary">Gesamtdistanz</Typography>
+              <Typography variant="h6">{participant.totalDistance.toFixed(1)} km</Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary">Gesamtzeit</Typography>
+              <Typography variant="h6">{formatTime(participant.totalTime)}</Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary">Bester Rang</Typography>
+              <Typography variant="h6">{participant.bestRank ?? '-'}</Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary">Durchschnittlicher Rang</Typography>
+              <Typography variant="h6">{participant.averageRank?.toFixed(0) ?? '-'}</Typography>
+            </Box>
           </Box>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">Gesamtzeit</Typography>
-            <Typography variant="h6">{formatTime(participant.totalTime)}</Typography>
+          <Box sx={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+            gap: 2,
+            [theme.breakpoints.down('sm')]: {
+              gridTemplateColumns: 'repeat(2, 1fr)',
+              gap: 1
+            }
+          }}>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary">Teilnahmen</Typography>
+              <Typography variant="h6">{participant.participationCount}</Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary">Erfolgreich</Typography>
+              <Typography variant="h6">{participant.completedRaces}</Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary">Disqualifiziert</Typography>
+              <Typography variant="h6">{participant.disqualifiedRaces}</Typography>
+            </Box>
+            <Box></Box>
           </Box>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">Bester Rang</Typography>
-            <Typography variant="h6">{participant.bestRank ?? '-'}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">Durchschnittlicher Rang</Typography>
-            <Typography variant="h6">{participant.averageRank?.toFixed(0) ?? '-'}</Typography>
-          </Box>
-        </Box>
-        <Box sx={{ 
-          display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-          gap: 2,
-          [theme.breakpoints.down('sm')]: {
-            gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: 1
-          }
-        }}>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">Teilnahmen</Typography>
-            <Typography variant="h6">{participant.participationCount}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">Erfolgreich</Typography>
-            <Typography variant="h6">{participant.completedRaces}</Typography>
-          </Box>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">Disqualifiziert</Typography>
-            <Typography variant="h6">{participant.disqualifiedRaces}</Typography>
-          </Box>
-          <Box></Box>
-        </Box>
+        </Stack>
       </Paper>
 
       <CommonTableContainer>
@@ -274,22 +273,20 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
       {trackProgressions.length > 0 && (
         <Box sx={{ my: 3 }}>
           <Typography variant="h6" sx={{ mb: 2 }}>Streckenverlauf</Typography>
-          <Box sx={{ 
-            display: 'flex', 
-            flexWrap: 'wrap',
-            gap: 3,
-            '& > *': { 
-              flex: '1 1 400px',
-              overflow: 'hidden'
-            }
-          }}>
+          <Stack 
+            direction="row"
+            flexWrap="wrap"
+            spacing={3}
+            sx={{
+              '& > *': { 
+                flex: '1 1 400px',
+                overflow: 'hidden'
+              }
+            }}
+          >
             {trackProgressions.map(({ track, data, timeRange }) => (
-              <Box key={track} sx={{ 
-                height: 250, 
-                display: 'flex',
-                flexDirection: 'column'
-              }}>
-                <Typography variant="subtitle1" sx={{ mb: 1 }}>Strecke {track}</Typography>
+              <Stack key={track} spacing={1} sx={{ height: 250 }}>
+                <Typography variant="subtitle1">Strecke {track}</Typography>
                 <Box sx={{ flex: 1, minHeight: 0 }}>
                   <ResponsiveContainer>
                     <ComposedChart data={data} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
@@ -336,9 +333,9 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
                     </ComposedChart>
                   </ResponsiveContainer>
                 </Box>
-              </Box>
+              </Stack>
             ))}
-          </Box>
+          </Stack>
         </Box>
       )}
     </Box>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useTheme, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 const correctSequence = [1, 3, 4, 8];
@@ -39,18 +39,18 @@ export const LandingPage: React.FC = () => {
   }, [selectedImages, navigate]);
 
   return (
-    <Box sx={{
-      height: `calc(100vh - ${theme.spacing(12)})`,
-      "@supports (height: 100dvh)": {
-        height: `calc(100dvh - ${theme.spacing(12)})`
-      },
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      p: 3,
-      bgcolor: theme.palette.primary.main,
-    }}>
+    <Stack
+      sx={{
+        height: `calc(100vh - ${theme.spacing(12)})`,
+        "@supports (height: 100dvh)": {
+          height: `calc(100dvh - ${theme.spacing(12)})`
+        },
+        alignItems: 'center',
+        justifyContent: 'center',
+        p: 3,
+        bgcolor: theme.palette.primary.main,
+      }}
+    >
       {error && (
         <Typography color="error" align="center">
           {error}
@@ -104,6 +104,6 @@ export const LandingPage: React.FC = () => {
           </Box>
         ))}
       </Box>
-    </Box>
+    </Stack>
   );
 }; 

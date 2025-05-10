@@ -8,6 +8,8 @@ import {
   TableSortLabel,
   TextField,
   Stack,
+  InputAdornment,
+  IconButton,
 } from '@mui/material';
 import { useData } from './dataContext';
 import { handleSort, SortOrder } from '../utils/tableUtils';
@@ -15,6 +17,7 @@ import { ParticipantDetails } from './participantDetails';
 import { CommonDialog } from './commonDialog';
 import { CommonTableContainer } from './styledComponents';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import ClearIcon from '@mui/icons-material/Clear';
 
 type SortField = 'name' | 'totalDistance' | 'totalTime' | 'participationCount' | 'completedRaces' | 'disqualifiedRaces' | 'bestRank' | 'averageRank' | 'tracks';
 
@@ -41,6 +44,11 @@ export const ParticipantStatistics = () => {
     } else {
       navigate({ pathname: location.pathname, hash: 'participants', search: '' }, { replace: true });
     }
+  };
+
+  const handleClearSearch = () => {
+    setSearchTerm('');
+    navigate({ pathname: location.pathname, hash: 'participants', search: '' }, { replace: true });
   };
 
   useEffect(() => {
@@ -126,6 +134,19 @@ export const ParticipantStatistics = () => {
           value={searchTerm}
           onChange={(e) => handleSearchChange(e.target.value)}
           fullWidth
+          InputProps={{
+            endAdornment: searchTerm && (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleClearSearch}
+                  edge="end"
+                  size="small"
+                >
+                  <ClearIcon />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
       </Stack>
       <CommonTableContainer>
