@@ -135,8 +135,27 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
 
   return (
     <Box sx={{ position: 'relative' }}>
-      <Paper sx={{ p: 3, mb: 3, display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 2 }}>
+      <Paper sx={{ 
+        p: 3, 
+        mb: 3, 
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: 2,
+        [theme.breakpoints.down('sm')]: {
+          p: 1.5,
+          mb: 2,
+          gap: 1
+        }
+      }}>
+        <Box sx={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+          gap: 2,
+          [theme.breakpoints.down('sm')]: {
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: 1
+          }
+        }}>
           <Box>
             <Typography variant="subtitle2" color="text.secondary">Gesamtdistanz</Typography>
             <Typography variant="h6">{participant.totalDistance.toFixed(1)} km</Typography>
@@ -154,7 +173,15 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
             <Typography variant="h6">{participant.averageRank?.toFixed(0) ?? '-'}</Typography>
           </Box>
         </Box>
-        <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 2 }}>
+        <Box sx={{ 
+          display: 'grid', 
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+          gap: 2,
+          [theme.breakpoints.down('sm')]: {
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: 1
+          }
+        }}>
           <Box>
             <Typography variant="subtitle2" color="text.secondary">Teilnahmen</Typography>
             <Typography variant="h6">{participant.participationCount}</Typography>
