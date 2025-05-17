@@ -8,7 +8,6 @@ import {
   TableCell,
   TableHead,
   TableRow,
-  Chip,
   TableSortLabel,
   useTheme,
   Stack,
