@@ -2,7 +2,7 @@ export interface Run {
   track: number;
   name: string;
   distance: number;
-  altitude: number | null;
+  altitude: number;
   time: string | null;
   rank: number | null;
 }
