@@ -19,7 +19,7 @@ import { CommonTableContainer } from './styledComponents';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ClearIcon from '@mui/icons-material/Clear';
 
-type SortField = 'name' | 'totalDistance' | 'totalTime' | 'participationCount' | 'completedRaces' | 'disqualifiedRaces' | 'bestRank' | 'averageRank' | 'tracks';
+type SortField = 'name' | 'totalDistance' | 'totalTime' | 'totalAltitude' | 'participationCount' | 'completedRaces' | 'disqualifiedRaces' | 'bestRank' | 'averageRank' | 'tracks';
 
 const formatTime = (minutes: number): string => {
   const hours = Math.floor(minutes / 60);
@@ -85,6 +85,9 @@ export const ParticipantStatistics = () => {
             break;
           case 'totalDistance':
             comparison = a.totalDistance - b.totalDistance;
+            break;
+          case 'totalAltitude':
+            comparison = a.totalAltitude - b.totalAltitude;
             break;
           case 'totalTime':
             comparison = a.totalTime - b.totalTime;
@@ -173,6 +176,15 @@ export const ParticipantStatistics = () => {
               </TableCell>
               <TableCell align="right">
                 <TableSortLabel
+                  active={sortField === 'totalAltitude'}
+                  direction={sortField === 'totalAltitude' ? sortOrder : 'asc'}
+                  onClick={() => handleSort('totalAltitude', sortField, sortOrder, setSortField, setSortOrder)}
+                >
+                  Höhenmeter
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="right">
+                <TableSortLabel
                   active={sortField === 'totalTime'}
                   direction={sortField === 'totalTime' ? sortOrder : 'asc'}
                   onClick={() => handleSort('totalTime', sortField, sortOrder, setSortField, setSortOrder)}
@@ -248,6 +260,7 @@ export const ParticipantStatistics = () => {
               >
                 <TableCell>{stat.name}</TableCell>
                 <TableCell align="right">{stat.totalDistance.toFixed(1)}km</TableCell>
+                <TableCell align="right">{stat.totalAltitude}m</TableCell>
                 <TableCell align="right">{formatTime(stat.totalTime)}</TableCell>
                 <TableCell align="right">{stat.participationCount}</TableCell>
                 <TableCell align="right">{stat.completedRaces}</TableCell>

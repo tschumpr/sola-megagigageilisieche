@@ -43,6 +43,7 @@ export const calculateParticipantStats = (allYearData: YearData[]): ParticipantS
         name: run.name,
         totalDistance: 0,
         totalTime: 0,
+        totalAltitude: 0,
         participationCount: 0,
         completedRaces: 0,
         cancelledRaces: 0,
@@ -57,22 +58,33 @@ export const calculateParticipantStats = (allYearData: YearData[]): ParticipantS
       if (!allRunsCancelled) {
         existingStats.participationCount++;
         existingStats.totalDistance += run.distance;
+        if (run.altitude !== null) {
+          existingStats.totalAltitude += run.altitude;
+        }
+
+        const timeInMinutes = timeToMinutes(run.time);
+        const pace = run.time && run.distance ? timeInMinutes / run.distance : undefined;
+        const pace3D = run.time && run.distance && run.altitude ? 
+          timeInMinutes / (Math.sqrt(Math.pow(run.distance * 1000, 2) + Math.pow(run.altitude, 2)) / 1000) : undefined;
 
         existingStats.races.push({
           year: year,
           track: run.track,
           distance: run.distance,
-          time: timeToMinutes(run.time),
+          altitude: run.altitude,
+          time: timeInMinutes,
           rank: run.rank,
           isDisqualified: run.time === null && run.rank === null,
-          isCancelled: false
+          isCancelled: false,
+          pace,
+          pace3D
         });
 
         if (run.time === null && run.rank === null) {
           existingStats.disqualifiedRaces++;
         } else {
           existingStats.completedRaces++;
-          existingStats.totalTime += timeToMinutes(run.time);
+          existingStats.totalTime += timeInMinutes;
         }
 
         if (run.rank !== null) {
