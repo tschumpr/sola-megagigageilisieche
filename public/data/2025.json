@@ -1,0 +1,122 @@
+{
+    "runs": [
+      {
+        "track": 1,
+        "name": "Livia Britschgi",
+        "distance": 3.6,
+        "altitude": 65,
+        "time": "00:21:04",
+        "rank": 604
+      },
+      {
+        "track": 2,
+        "name": "Raphael Schalbetter",
+        "distance": 13.7,
+        "altitude": 160,
+        "time": "00:46:38",
+        "rank": 21
+      },
+      {
+        "track": 3,
+        "name": "Sales Indergand",
+        "distance": 5.9,
+        "altitude": 413,
+        "time": "00:36:06",
+        "rank": 264
+      },
+      {
+        "track": 4,
+        "name": "Lorenz Schmid",
+        "distance": 5.9,
+        "altitude": 122,
+        "time": "00:27:14",
+        "rank": 125
+      },
+      {
+        "track": 5,
+        "name": "Stefan Schönenberger",
+        "distance": 13.9,
+        "altitude": 288,
+        "time": "00:59:35",
+        "rank": 102
+      },
+      {
+        "track": 6,
+        "name": "Tomislav Medic",
+        "distance": 10.4,
+        "altitude": 234,
+        "time": "00:50:54",
+        "rank": 335
+      },
+      {
+        "track": 7,
+        "name": "Roswita Tschümperlin",
+        "distance": 4,
+        "altitude": 54,
+        "time": "00:19:55",
+        "rank": 375
+      },
+      {
+        "track": 8,
+        "name": "Carla Kramis",
+        "distance": 6.2,
+        "altitude": 212,
+        "time": "00:32:06",
+        "rank": 273
+      },
+      {
+        "track": 9,
+        "name": "Michael Faden",
+        "distance": 11.1,
+        "altitude": 267,
+        "time": "00:57:25",
+        "rank": 472
+      },
+      {
+        "track": 10,
+        "name": "Roxana Zehtabchi",
+        "distance": 8.6,
+        "altitude": 159,
+        "time": "00:39:24",
+        "rank": 206
+      },
+      {
+        "track": 11,
+        "name": "Benjamin Kramis",
+        "distance": 12.6,
+        "altitude": 421,
+        "time": "01:01:52",
+        "rank": 265
+      },
+      {
+        "track": 12,
+        "name": "Irina Tschümperlin",
+        "distance": 6.3,
+        "altitude": 78,
+        "time": "00:28:54",
+        "rank": 187
+      },
+      {
+        "track": 13,
+        "name": "Andris Wyss",
+        "distance": 4.6,
+        "altitude": 80,
+        "time": "00:20:07",
+        "rank": 88
+      },
+      {
+        "track": 14,
+        "name": "Manuel Luck",
+        "distance": 5.6,
+        "altitude": 65,
+        "time": "00:26:45",
+        "rank": 290
+      }
+    ],
+    "total": {
+      "time": "08:47:54",
+      "rank": 74,
+      "category": "Schnell"
+    }
+  }
+  
