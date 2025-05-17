@@ -4,6 +4,7 @@
         "track": 1,
         "name": "Livia Britschgi",
         "distance": 3.7,
+        "altitude": null,
         "time": "00:23:18",
         "rank": 807
       },
@@ -11,6 +12,7 @@
         "track": 2,
         "name": "Valens Frangez",
         "distance": 14.1,
+        "altitude": null,
         "time": "01:00:00",
         "rank": 221
       },
@@ -18,6 +20,7 @@
         "track": 3,
         "name": "Stefan Schönenberger",
         "distance": 6.2,
+        "altitude": null,
         "time": "00:31:20",
         "rank": 68
       },
@@ -25,6 +28,7 @@
         "track": 4,
         "name": "Cedric Dind",
         "distance": 5.9,
+        "altitude": null,
         "time": "00:27:51",
         "rank": 166
       },
@@ -32,6 +36,7 @@
         "track": 5,
         "name": "Manuel Luck",
         "distance": 13.8,
+        "altitude": null,
         "time": "01:07:59",
         "rank": 412
       },
@@ -39,6 +44,7 @@
         "track": 6,
         "name": "Benjamin Kramis",
         "distance": 10.6,
+        "altitude": null,
         "time": "00:57:11",
         "rank": 511
       },
@@ -46,6 +52,7 @@
         "track": 7,
         "name": "Kosta Lessis",
         "distance": 4.5,
+        "altitude": null,
         "time": "00:22:38",
         "rank": 326
       },
@@ -53,6 +60,7 @@
         "track": 8,
         "name": "Nemro Kubli",
         "distance": 6.3,
+        "altitude": null,
         "time": "00:29:30",
         "rank": 132
       },
@@ -60,6 +68,7 @@
         "track": 9,
         "name": "Lorenz Schmid",
         "distance": 11.3,
+        "altitude": null,
         "time": "01:00:26",
         "rank": 611
       },
@@ -67,6 +76,7 @@
         "track": 10,
         "name": "Viviane Furrer",
         "distance": 8.7,
+        "altitude": null,
         "time": "00:40:53",
         "rank": 141
       },
@@ -74,6 +84,7 @@
         "track": 11,
         "name": "Marius Zumstein",
         "distance": 12.4,
+        "altitude": null,
         "time": "01:03:18",
         "rank": 426
       },
@@ -81,6 +92,7 @@
         "track": 12,
         "name": "Roswita Tschümperlin",
         "distance": 5.8,
+        "altitude": null,
         "time": "00:30:04",
         "rank": 284
       },
@@ -88,6 +100,7 @@
         "track": 13,
         "name": "Helena Burch",
         "distance": 4.9,
+        "altitude": null,
         "time": "00:29:04",
         "rank": 812
       },
@@ -95,6 +108,7 @@
         "track": 14,
         "name": "Dominique Meier",
         "distance": 5.6,
+        "altitude": null,
         "time": "00:27:47",
         "rank": 504
       }
