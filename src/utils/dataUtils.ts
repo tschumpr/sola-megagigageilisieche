@@ -9,7 +9,13 @@ export const timeToMinutes = (time: string | null): number => {
 
 // Function to load all year data
 export const loadAllYearData = async (): Promise<YearData[]> => {
-  const years = Array.from({ length: 11 }, (_, i) => 2014 + i);
+  // Try to load years from 2014 to current year + 1
+  const currentYear = new Date().getFullYear();
+  const years = Array.from(
+    { length: currentYear - 2014 + 2 }, // +2 to include current year and next year
+    (_, i) => 2014 + i
+  );
+
   const dataPromises = years.map(async (year) => {
     try {
       const response = await fetch(`${import.meta.env.BASE_URL}data/${year}.json`, {
@@ -17,10 +23,20 @@ export const loadAllYearData = async (): Promise<YearData[]> => {
           'Cache-Control': 'no-cache',
         },
       });
-      if (!response.ok) throw new Error(`Failed to load ${year}.json`);
+      if (!response.ok) {
+        if (response.status === 404) {
+          // Skip years that don't have data yet
+          return null;
+        }
+        throw new Error(`Failed to load ${year}.json`);
+      }
       const data = await response.json();
       return { ...data, year };
     } catch (error) {
+      if (error instanceof Error && error.message.includes('404')) {
+        // Skip years that don't have data yet
+        return null;
+      }
       console.error(`Error loading ${year}.json:`, error);
       return null;
     }
