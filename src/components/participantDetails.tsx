@@ -25,8 +25,8 @@ import {
   YAxis,
 } from "recharts";
 import { ParticipantStats } from "../types";
-import { CommonTableContainer } from "./styledComponents";
 import { useData } from "./dataContext";
+import { CommonTableContainer } from "./styledComponents";
 
 interface ParticipantDetailsProps {
   participant: ParticipantStats;
@@ -105,13 +105,13 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
         const sortedRaces = races.sort((a, b) => a.year - b.year);
         const times = sortedRaces.map(r => r.time).filter((t): t is number => t !== 0);
         const paces = sortedRaces.map(r => r.pace).filter((p): p is number => p !== undefined);
-        
+
         // Calculate time range with padding
         const timeMin = Math.min(...times);
         const timeMax = Math.max(...times);
         const timeRange = timeMax - timeMin;
         const padding = timeRange * 0.1; // 10% padding
-        
+
         // Calculate appropriate interval based on the time range
         const interval = Math.ceil(timeRange / 5); // Aim for about 5 intervals
         const min = Math.floor((timeMin - padding) / interval) * interval;
@@ -149,10 +149,6 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
     return value.toFixed(2);
   };
 
-  const formatAxisRank = (value: number) => {
-    return value.toString();
-  };
-
   const formatPace = (pace: number | undefined): string => {
     if (pace === undefined) return "-";
     return `${pace.toFixed(2)} min/km`;
@@ -166,9 +162,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
         <Typography variant="body2">{`${data.year}`}</Typography>
         <Typography variant="body2" color="primary">{`Rang: ${data.rank ?? "-"} von ${data.participants}`}</Typography>
         <Typography variant="body2" color="secondary">{`Zeit: ${formatTime(data.time)}`}</Typography>
-        {data.pace && (
-          <Typography variant="body2" color="info.main">{`Pace: ${formatPace(data.pace)}`}</Typography>
-        )}
+        {data.pace && <Typography variant="body2" color="info.main">{`Pace: ${formatPace(data.pace)}`}</Typography>}
       </Box>
     );
   };
@@ -383,12 +377,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
                         domain={[timeRange.min, timeRange.max]}
                         tickFormatter={formatAxisTime}
                       />
-                      <YAxis
-                        yAxisId="middle"
-                        orientation="left"
-                        domain={[0, 1000]}
-                        hide={true}
-                      />
+                      <YAxis yAxisId="middle" orientation="left" domain={[0, 1000]} hide={true} />
                       <YAxis
                         yAxisId="right"
                         orientation="right"
@@ -397,7 +386,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
                           angle: 90,
                           position: "insideRight",
                           offset: 10,
-                          style: { textAnchor: 'middle' }
+                          style: { textAnchor: "middle" },
                         }}
                         domain={[paceRange.min, paceRange.max]}
                         tickFormatter={formatAxisPace}
