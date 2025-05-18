@@ -30,7 +30,7 @@ interface ParticipantDetailsProps {
   participant: ParticipantStats;
 }
 
-type SortField = 'year' | 'track' | 'distance' | 'altitude' | 'time' | 'pace' | 'pace3D' | 'rank';
+type SortField = 'year' | 'track' | 'distance' | 'altitude' | 'time' | 'pace' | 'rank';
 type SortOrder = 'asc' | 'desc';
 
 export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant }) => {
@@ -84,12 +84,6 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
           else if (a.pace === undefined) comparison = 1;
           else if (b.pace === undefined) comparison = -1;
           else comparison = a.pace - b.pace;
-          break;
-        case 'pace3D':
-          if (a.pace3D === undefined && b.pace3D === undefined) comparison = 0;
-          else if (a.pace3D === undefined) comparison = 1;
-          else if (b.pace3D === undefined) comparison = -1;
-          else comparison = a.pace3D - b.pace3D;
           break;
         case 'rank':
           if (a.rank === null && b.rank === null) comparison = 0;
@@ -274,15 +268,6 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
               </TableCell>
               <TableCell align="right">
                 <TableSortLabel
-                  active={sortField === 'pace3D'}
-                  direction={sortField === 'pace3D' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('pace3D')}
-                >
-                  Pace 3D (min/km)
-                </TableSortLabel>
-              </TableCell>
-              <TableCell align="right">
-                <TableSortLabel
                   active={sortField === 'rank'}
                   direction={sortField === 'rank' ? sortOrder : 'asc'}
                   onClick={() => handleSort('rank')}
@@ -312,9 +297,6 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
                 </TableCell>
                 <TableCell align="right">
                   {race.pace !== undefined ? race.pace.toFixed(1) : '-'}
-                </TableCell>
-                <TableCell align="right">
-                  {race.pace3D !== undefined ? race.pace3D.toFixed(1) : '-'}
                 </TableCell>
                 <TableCell align="right">{race.rank !== null ? race.rank : '-'}</TableCell>
               </TableRow>

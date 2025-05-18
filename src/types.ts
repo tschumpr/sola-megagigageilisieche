@@ -44,7 +44,6 @@ export interface Race {
   isDisqualified: boolean;
   isCancelled: boolean;
   pace?: number; // min/km
-  pace3D?: number; // min/km (including altitude)
 }
 
 export interface ParticipantStats {

@@ -80,8 +80,6 @@ export const calculateParticipantStats = (allYearData: YearData[]): ParticipantS
 
         const timeInMinutes = timeToMinutes(run.time);
         const pace = run.time && run.distance ? timeInMinutes / run.distance : undefined;
-        const pace3D = run.time && run.distance && run.altitude ? 
-          timeInMinutes / (Math.sqrt(Math.pow(run.distance * 1000, 2) + Math.pow(run.altitude, 2)) / 1000) : undefined;
 
         existingStats.races.push({
           year: year,
@@ -92,8 +90,7 @@ export const calculateParticipantStats = (allYearData: YearData[]): ParticipantS
           rank: run.rank,
           isDisqualified: run.time === null && run.rank === null,
           isCancelled: false,
-          pace,
-          pace3D
+          pace
         });
 
         if (run.time === null && run.rank === null) {
