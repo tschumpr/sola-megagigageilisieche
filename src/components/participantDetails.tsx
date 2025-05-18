@@ -126,7 +126,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
 
   const formatPace = (pace: number | undefined): string => {
     if (pace === undefined) return "-";
-    return `${pace.toFixed(1)} min/km`;
+    return `${pace.toFixed(2)} min/km`;
   };
 
   const renderTooltip = (props: TooltipProps<number, string>) => {
