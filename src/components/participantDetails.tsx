@@ -12,7 +12,18 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { Bar, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  Legend,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
+  TooltipProps,
+  XAxis,
+  YAxis,
+} from "recharts";
 import { ParticipantStats } from "../types";
 import { CommonTableContainer } from "./styledComponents";
 
@@ -118,16 +129,14 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
     return `${pace.toFixed(1)} min/km`;
   };
 
-  const renderTooltip = (props: {
-    active?: boolean;
-    payload?: Array<{ value: number; dataKey: string }>;
-    label?: string;
-  }) => {
+  const renderTooltip = (props: TooltipProps<number, string>) => {
     if (!props.active || !props.payload || !props.payload.length) return null;
-    const data = props.payload[0];
+    const data = props.payload[0].payload;
     return (
       <Box sx={{ bgcolor: "background.paper", p: 1, border: "1px solid", borderColor: "divider" }}>
-        <Typography variant="body2">{`${props.label}: ${data.value}`}</Typography>
+        <Typography variant="body2">{`${data.year}`}</Typography>
+        <Typography variant="body2" color="primary">{`Rang: ${data.rank ?? "-"}`}</Typography>
+        <Typography variant="body2" color="secondary">{`Zeit: ${formatTime(data.time)}`}</Typography>
       </Box>
     );
   };
@@ -352,7 +361,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
                           offset: 0,
                         }}
                       />
-                      <Tooltip labelFormatter={renderTooltip} />
+                      <Tooltip content={renderTooltip} />
                       <Legend wrapperStyle={{ paddingTop: 20 }} />
                       <Bar yAxisId="right" dataKey="rank" name="Rang" fill={theme.palette.primary.main} />
                       <Line

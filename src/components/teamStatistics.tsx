@@ -116,11 +116,16 @@ export const TeamStatistics = () => {
 
   const renderTooltip = (props: TooltipProps<number, string>) => {
     if (!props.active || !props.payload || !props.payload.length) return null;
-    const data = props.payload[0];
-    const value = data.dataKey === "time" ? formatAxisTime(data.value as number) : data.value;
+    const data = props.payload[0].payload;
     return (
       <Box sx={{ bgcolor: "background.paper", p: 1, border: "1px solid", borderColor: "divider" }}>
-        <Typography variant="body2">{`${props.label}: ${value}`}</Typography>
+        <Typography variant="body2">{`${data.year}`}</Typography>
+        <Typography variant="body2" color="primary">
+          {`Rang: ${data.rank ?? "-"}`}
+        </Typography>
+        <Typography variant="body2" color="secondary">
+          {`Zeit: ${data.timeFormatted ?? "-"}`}
+        </Typography>
       </Box>
     );
   };
