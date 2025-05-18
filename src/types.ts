@@ -17,6 +17,7 @@ export interface YearData {
   year: number;
   runs: Run[];
   total: TeamResult;
+  participants: number;
 }
 
 export interface ParticipantStatsCalculation {

@@ -26,6 +26,7 @@ import {
 } from "recharts";
 import { ParticipantStats } from "../types";
 import { CommonTableContainer } from "./styledComponents";
+import { useData } from "./dataContext";
 
 interface ParticipantDetailsProps {
   participant: ParticipantStats;
@@ -36,6 +37,7 @@ type SortOrder = "asc" | "desc";
 
 export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant }) => {
   const theme = useTheme();
+  const { yearData } = useData();
   const [sortField, setSortField] = useState<SortField>("year");
   const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
 
@@ -102,26 +104,53 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
       .map(([track, races]) => {
         const sortedRaces = races.sort((a, b) => a.year - b.year);
         const times = sortedRaces.map(r => r.time).filter((t): t is number => t !== 0);
-        const min = Math.floor(Math.min(...times) / 5) * 5; // Round down to nearest 5 minutes
-        const max = Math.ceil(Math.max(...times) / 5) * 5; // Round up to nearest 5 minutes
+        const paces = sortedRaces.map(r => r.pace).filter((p): p is number => p !== undefined);
+        
+        // Calculate time range with padding
+        const timeMin = Math.min(...times);
+        const timeMax = Math.max(...times);
+        const timeRange = timeMax - timeMin;
+        const padding = timeRange * 0.1; // 10% padding
+        
+        // Calculate appropriate interval based on the time range
+        const interval = Math.ceil(timeRange / 5); // Aim for about 5 intervals
+        const min = Math.floor((timeMin - padding) / interval) * interval;
+        const max = Math.ceil((timeMax + padding) / interval) * interval;
+
+        const minPace = Math.floor(Math.min(...paces) * 2) / 2; // Round down to nearest 0.5
+        const maxPace = Math.ceil(Math.max(...paces) * 2) / 2; // Round up to nearest 0.5
 
         return {
           track: Number(track),
-          data: sortedRaces.map(race => ({
-            year: race.year,
-            time: race.time,
-            rank: race.rank,
-          })),
+          data: sortedRaces.map(race => {
+            const yearDataItem = yearData.find(data => data.year === race.year);
+            return {
+              year: race.year,
+              time: race.time,
+              rank: race.rank,
+              participants: yearDataItem?.participants,
+              pace: race.pace,
+            };
+          }),
           timeRange: { min, max },
+          paceRange: { min: minPace, max: maxPace },
         };
       })
       .sort((a, b) => a.track - b.track);
-  }, [participant]);
+  }, [participant, yearData]);
 
   const formatAxisTime = (value: number) => {
     const hours = Math.floor(value / 60);
     const minutes = Math.floor(value % 60);
     return `${hours}:${minutes.toString().padStart(2, "0")}`;
+  };
+
+  const formatAxisPace = (value: number) => {
+    return value.toFixed(2);
+  };
+
+  const formatAxisRank = (value: number) => {
+    return value.toString();
   };
 
   const formatPace = (pace: number | undefined): string => {
@@ -135,8 +164,11 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
     return (
       <Box sx={{ bgcolor: "background.paper", p: 1, border: "1px solid", borderColor: "divider" }}>
         <Typography variant="body2">{`${data.year}`}</Typography>
-        <Typography variant="body2" color="primary">{`Rang: ${data.rank ?? "-"}`}</Typography>
+        <Typography variant="body2" color="primary">{`Rang: ${data.rank ?? "-"} von ${data.participants}`}</Typography>
         <Typography variant="body2" color="secondary">{`Zeit: ${formatTime(data.time)}`}</Typography>
+        {data.pace && (
+          <Typography variant="body2" color="info.main">{`Pace: ${formatPace(data.pace)}`}</Typography>
+        )}
       </Box>
     );
   };
@@ -324,7 +356,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
                 overflow: "hidden",
               },
             }}>
-            {trackProgressions.map(({ track, data, timeRange }) => (
+            {trackProgressions.map(({ track, data, timeRange, paceRange }) => (
               <Stack key={track} spacing={1} sx={{ height: 250 }}>
                 <Typography variant="subtitle1">Strecke {track}</Typography>
                 <Box sx={{ flex: 1, minHeight: 0 }}>
@@ -352,24 +384,41 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
                         tickFormatter={formatAxisTime}
                       />
                       <YAxis
+                        yAxisId="middle"
+                        orientation="left"
+                        domain={[0, 1000]}
+                        hide={true}
+                      />
+                      <YAxis
                         yAxisId="right"
                         orientation="right"
                         label={{
-                          value: "Rang",
+                          value: "Pace (min/km)",
                           angle: 90,
                           position: "insideRight",
-                          offset: 0,
+                          offset: 10,
+                          style: { textAnchor: 'middle' }
                         }}
+                        domain={[paceRange.min, paceRange.max]}
+                        tickFormatter={formatAxisPace}
                       />
                       <Tooltip content={renderTooltip} />
                       <Legend wrapperStyle={{ paddingTop: 20 }} />
-                      <Bar yAxisId="right" dataKey="rank" name="Rang" fill={theme.palette.primary.main} />
+                      <Bar yAxisId="middle" dataKey="rank" name="Rang" fill={theme.palette.primary.main} />
                       <Line
                         yAxisId="left"
                         type="monotone"
                         dataKey="time"
                         name="Zeit"
                         stroke={theme.palette.secondary.main}
+                        strokeWidth={2}
+                      />
+                      <Line
+                        yAxisId="right"
+                        type="monotone"
+                        dataKey="pace"
+                        name="Pace"
+                        stroke={theme.palette.info.main}
                         strokeWidth={2}
                       />
                     </ComposedChart>

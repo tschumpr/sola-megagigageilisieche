@@ -78,7 +78,7 @@
         "distance": 8.6,
         "altitude": 159,
         "time": "00:39:24",
-        "rank": 206
+        "rank": 207
       },
       {
         "track": 11,
@@ -117,6 +117,7 @@
       "time": "08:47:54",
       "rank": 74,
       "category": "Schnell"
-    }
+    },
+    "participants": 1106
   }
   
