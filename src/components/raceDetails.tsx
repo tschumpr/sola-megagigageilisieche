@@ -1,12 +1,6 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableRow,
-} from '@mui/material';
-import { Run } from '../types';
-import { CommonTableContainer } from './styledComponents';
+import { Table, TableBody, TableCell, TableHead, TableRow } from "@mui/material";
+import { Run } from "../types";
+import { CommonTableContainer } from "./styledComponents";
 
 interface RaceDetailsProps {
   runs: Run[] | null;
@@ -28,17 +22,17 @@ export const RaceDetails = ({ runs }: RaceDetailsProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {runs.map((run) => (
+          {runs.map(run => (
             <TableRow key={run.track}>
               <TableCell>{run.track}</TableCell>
               <TableCell>{run.name}</TableCell>
               <TableCell align="right">{run.distance}km</TableCell>
-              <TableCell align="right">{run.time ?? '-'}</TableCell>
-              <TableCell align="right">{run.rank ?? '-'}</TableCell>
+              <TableCell align="right">{run.time ?? "-"}</TableCell>
+              <TableCell align="right">{run.rank ?? "-"}</TableCell>
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </CommonTableContainer>
   );
-}; 
+};

@@ -1,47 +1,49 @@
-import { useState, useMemo } from 'react';
+import { useMemo, useState } from "react";
 import {
+  Box,
+  Chip,
+  Paper,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
-  Chip,
   TableSortLabel,
-  Paper,
-  Box,
+  Typography,
   useTheme,
-} from '@mui/material';
+} from "@mui/material";
 import {
-  ComposedChart,
-  Line,
   Bar,
+  CartesianGrid,
+  ComposedChart,
+  Legend,
+  Line,
+  ResponsiveContainer,
+  Tooltip,
+  TooltipProps,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
-import { useData } from './dataContext';
-import { handleSort, SortOrder } from '../utils/tableUtils';
-import { RaceDetails } from './raceDetails';
-import { CommonDialog } from './commonDialog';
-import { CommonTableContainer } from './styledComponents';
-import { timeToMinutes } from '../utils/dataUtils';
+} from "recharts";
+import { timeToMinutes } from "../utils/dataUtils";
+import { handleSort, SortOrder } from "../utils/tableUtils";
+import { CommonDialog } from "./commonDialog";
+import { useData } from "./dataContext";
+import { RaceDetails } from "./raceDetails";
+import { CommonTableContainer } from "./styledComponents";
 
-type SortField = 'year' | 'category' | 'totalTime' | 'rank';
+type SortField = "year" | "category" | "totalTime" | "rank";
 
 const formatTime = (timeStr: string | null): string => {
-  if (!timeStr) return '-';
-  const [hours, minutes, seconds] = timeStr.split(':').map(Number);
+  if (!timeStr) return "-";
+  const [hours, minutes, seconds] = timeStr.split(":").map(Number);
   return `${hours}h ${minutes}m ${seconds}s`;
 };
 
 export const TeamStatistics = () => {
   const { teamStats, yearData } = useData();
   const theme = useTheme();
-  const [sortField, setSortField] = useState<SortField>('year');
-  const [sortOrder, setSortOrder] = useState<SortOrder>('desc');
+  const [sortField, setSortField] = useState<SortField>("year");
+  const [sortOrder, setSortOrder] = useState<SortOrder>("desc");
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
 
   const handleRowClick = (year: number) => {
@@ -62,26 +64,26 @@ export const TeamStatistics = () => {
     return [...teamStats].sort((a, b) => {
       let comparison = 0;
       switch (sortField) {
-        case 'year':
+        case "year":
           comparison = Number(a.year) - Number(b.year);
           break;
-        case 'category':
+        case "category":
           comparison = a.category.localeCompare(b.category);
           break;
-        case 'totalTime':
+        case "totalTime":
           if (a.totalTime === null && b.totalTime === null) comparison = 0;
           else if (a.totalTime === null) comparison = 1;
           else if (b.totalTime === null) comparison = -1;
           else comparison = a.totalTime.localeCompare(b.totalTime);
           break;
-        case 'rank':
+        case "rank":
           if (a.rank === null && b.rank === null) comparison = 0;
           else if (a.rank === null) comparison = 1;
           else if (b.rank === null) comparison = -1;
           else comparison = Number(a.rank) - Number(b.rank);
           break;
       }
-      return sortOrder === 'asc' ? comparison : -comparison;
+      return sortOrder === "asc" ? comparison : -comparison;
     });
   }, [teamStats, sortField, sortOrder]);
 
@@ -97,18 +99,10 @@ export const TeamStatistics = () => {
       }));
   }, [teamStats]); // Only depend on teamStats, not sortedStats
 
-  const formatTooltipTime = (value: number) => {
-    if (!value) return '-';
-    const hours = Math.floor(value / 60);
-    const minutes = Math.floor(value % 60);
-    const seconds = Math.floor((value * 60) % 60);
-    return `${hours}h ${minutes}m ${seconds}s`;
-  };
-
   const formatAxisTime = (value: number) => {
     const hours = Math.floor(value / 60);
     const minutes = Math.floor(value % 60);
-    return `${hours}:${minutes.toString().padStart(2, '0')}`;
+    return `${hours}:${minutes.toString().padStart(2, "0")}`;
   };
 
   // Calculate min and max time for the axis
@@ -120,31 +114,48 @@ export const TeamStatistics = () => {
     return { min, max };
   }, [chartData]);
 
+  const renderTooltip = (props: TooltipProps<number, string>) => {
+    if (!props.active || !props.payload || !props.payload.length) return null;
+    const data = props.payload[0];
+    const value = data.dataKey === "time" ? formatAxisTime(data.value as number) : data.value;
+    return (
+      <Box sx={{ bgcolor: "background.paper", p: 1, border: "1px solid", borderColor: "divider" }}>
+        <Typography variant="body2">{`${props.label}: ${value}`}</Typography>
+      </Box>
+    );
+  };
+
   return (
     <>
       <Paper sx={{ p: 2, mb: 2 }}>
-        <Box sx={{ width: '100%', height: 250 }}>
+        <Box sx={{ width: "100%", height: 250 }}>
           <ResponsiveContainer>
             <ComposedChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="year" />
-              <YAxis 
-                yAxisId="left" 
-                orientation="left" 
-                label={{ value: 'Zeit', angle: -90, position: 'insideLeft' }}
+              <YAxis
+                yAxisId="left"
+                orientation="left"
+                label={{ value: "Zeit", angle: -90, position: "insideLeft" }}
                 domain={[timeRange.min, timeRange.max]}
                 tickFormatter={formatAxisTime}
               />
-              <YAxis yAxisId="right" orientation="right" label={{ value: 'Rang', angle: 90, position: 'insideRight' }} />
-              <Tooltip 
-                formatter={(value: any, name: string) => {
-                  if (name === 'Zeit') return formatTooltipTime(value);
-                  return value;
-                }}
+              <YAxis
+                yAxisId="right"
+                orientation="right"
+                label={{ value: "Rang", angle: 90, position: "insideRight" }}
               />
+              <Tooltip content={renderTooltip} />
               <Legend />
               <Bar yAxisId="right" dataKey="rank" name="Rang" fill={theme.palette.primary.main} />
-              <Line yAxisId="left" type="monotone" dataKey="time" name="Zeit" stroke={theme.palette.secondary.main} strokeWidth={2} />
+              <Line
+                yAxisId="left"
+                type="monotone"
+                dataKey="time"
+                name="Zeit"
+                stroke={theme.palette.secondary.main}
+                strokeWidth={2}
+              />
             </ComposedChart>
           </ResponsiveContainer>
         </Box>
@@ -156,37 +167,33 @@ export const TeamStatistics = () => {
             <TableRow>
               <TableCell>
                 <TableSortLabel
-                  active={sortField === 'year'}
-                  direction={sortField === 'year' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('year', sortField, sortOrder, setSortField, setSortOrder)}
-                >
+                  active={sortField === "year"}
+                  direction={sortField === "year" ? sortOrder : "asc"}
+                  onClick={() => handleSort("year", sortField, sortOrder, setSortField, setSortOrder)}>
                   Jahr
                 </TableSortLabel>
               </TableCell>
               <TableCell>
                 <TableSortLabel
-                  active={sortField === 'category'}
-                  direction={sortField === 'category' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('category', sortField, sortOrder, setSortField, setSortOrder)}
-                >
+                  active={sortField === "category"}
+                  direction={sortField === "category" ? sortOrder : "asc"}
+                  onClick={() => handleSort("category", sortField, sortOrder, setSortField, setSortOrder)}>
                   Kategorie
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right">
                 <TableSortLabel
-                  active={sortField === 'totalTime'}
-                  direction={sortField === 'totalTime' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('totalTime', sortField, sortOrder, setSortField, setSortOrder)}
-                >
+                  active={sortField === "totalTime"}
+                  direction={sortField === "totalTime" ? sortOrder : "asc"}
+                  onClick={() => handleSort("totalTime", sortField, sortOrder, setSortField, setSortOrder)}>
                   Zeit
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right">
                 <TableSortLabel
-                  active={sortField === 'rank'}
-                  direction={sortField === 'rank' ? sortOrder : 'asc'}
-                  onClick={() => handleSort('rank', sortField, sortOrder, setSortField, setSortOrder)}
-                >
+                  active={sortField === "rank"}
+                  direction={sortField === "rank" ? sortOrder : "asc"}
+                  onClick={() => handleSort("rank", sortField, sortOrder, setSortField, setSortOrder)}>
                   Rang
                 </TableSortLabel>
               </TableCell>
@@ -194,19 +201,18 @@ export const TeamStatistics = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {sortedStats.map((stat) => (
-              <TableRow 
+            {sortedStats.map(stat => (
+              <TableRow
                 key={stat.year}
                 onClick={() => handleRowClick(stat.year)}
-                sx={{ 
-                  cursor: 'pointer',
-                  '&:hover': { backgroundColor: 'rgba(0, 0, 0, 0.04)' }
-                }}
-              >
+                sx={{
+                  cursor: "pointer",
+                  "&:hover": { backgroundColor: "rgba(0, 0, 0, 0.04)" },
+                }}>
                 <TableCell>{stat.year}</TableCell>
                 <TableCell>{stat.category}</TableCell>
                 <TableCell align="right">{formatTime(stat.totalTime)}</TableCell>
-                <TableCell align="right">{stat.rank ?? '-'}</TableCell>
+                <TableCell align="right">{stat.rank ?? "-"}</TableCell>
                 <TableCell align="right">
                   {stat.isCancelled ? (
                     <Chip label="Abgesagt" color="warning" />
@@ -226,13 +232,8 @@ export const TeamStatistics = () => {
         open={selectedYear !== null}
         onClose={handleCloseModal}
         title={`SOLA-Stafette ${selectedYear}`}
-        maxWidth="lg"
-      >
-        {selectedYear && (
-          <RaceDetails
-            runs={selectedYearData}
-          />
-        )}
+        maxWidth="lg">
+        {selectedYear && <RaceDetails runs={selectedYearData} />}
       </CommonDialog>
     </>
   );

@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { calculateParticipantStats, calculateTeamStats, loadAllYearData } from '../utils/dataUtils';
-import { ParticipantStats, TeamStats, YearData } from '../types';
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { ParticipantStats, TeamStats, YearData } from "../types";
+import { calculateParticipantStats, calculateTeamStats, loadAllYearData } from "../utils/dataUtils";
 
 interface DataContextProps {
   yearData: YearData[];
@@ -25,7 +25,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const data = await loadAllYearData();
         setYearData(data);
       } catch (err) {
-        setError('Failed to load race data');
+        setError("Failed to load race data");
         console.error(err);
       } finally {
         setLoading(false);
@@ -37,8 +37,8 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   useEffect(() => {
     if (yearData && yearData.length) {
-        setParticipantStats(calculateParticipantStats(yearData));
-        setTeamStats(calculateTeamStats(yearData));
+      setParticipantStats(calculateParticipantStats(yearData));
+      setTeamStats(calculateTeamStats(yearData));
     }
   }, [yearData]);
 
@@ -52,7 +52,7 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
 export const useData = (): DataContextProps => {
   const context = useContext(DataContext);
   if (context === undefined) {
-    throw new Error('useData must be used within a DataProvider');
+    throw new Error("useData must be used within a DataProvider");
   }
   return context;
 };
