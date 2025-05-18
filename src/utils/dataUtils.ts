@@ -113,10 +113,15 @@ export const calculateParticipantStats = (allYearData: YearData[]): ParticipantS
     });
   });
 
-  return Array.from(statsMap.values()).map(({ rankSum, rankCount, ...stats }) => ({
-    ...stats,
-    averageRank: rankCount > 0 ? Math.round(rankSum / rankCount) : null,
-  }));
+  return Array.from(statsMap.values()).map(({ rankSum, rankCount, ...stats }) => {
+    const validPaces = stats.races.filter(race => race.pace !== undefined).map(race => race.pace!);
+    const averagePace = validPaces.length > 0 ? validPaces.reduce((sum, pace) => sum + pace, 0) / validPaces.length : 0;
+    return {
+      ...stats,
+      averageRank: rankCount > 0 ? Math.round(rankSum / rankCount) : null,
+      averagePace,
+    };
+  });
 };
 
 // Function to calculate team statistics
