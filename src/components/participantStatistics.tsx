@@ -29,13 +29,20 @@ type SortField =
   | "disqualifiedRaces"
   | "bestRank"
   | "averageRank"
-  | "tracks";
+  | "tracks"
+  | "averagePace";
 
 const formatTime = (minutes: number): string => {
+  if (minutes === 0) return "-";
   const hours = Math.floor(minutes / 60);
   const mins = Math.floor(minutes % 60);
   const secs = Math.floor((minutes * 60) % 60);
   return `${hours}h ${mins}m ${secs}s`;
+};
+
+const formatPace = (pace: number | undefined): string => {
+  if (pace === undefined || pace === 0) return "-";
+  return `${pace.toFixed(2)}min/km`;
 };
 
 export const ParticipantStatistics = () => {
@@ -96,6 +103,12 @@ export const ParticipantStatistics = () => {
         stat =>
           stat.name.toLowerCase().includes(searchTerm.toLowerCase()) && stat.races.some(race => !race.isCancelled),
       )
+      .map(stat => {
+        const validPaces = stat.races.filter(race => race.pace !== undefined).map(race => race.pace!);
+        const averagePace =
+          validPaces.length > 0 ? validPaces.reduce((sum, pace) => sum + pace, 0) / validPaces.length : 0;
+        return { ...stat, averagePace };
+      })
       .sort((a, b) => {
         let comparison = 0;
         switch (sortField) {
@@ -108,9 +121,13 @@ export const ParticipantStatistics = () => {
           case "totalAltitude":
             comparison = a.totalAltitude - b.totalAltitude;
             break;
-          case "totalTime":
-            comparison = a.totalTime - b.totalTime;
-            break;
+          case "totalTime": {
+            if (a.totalTime === 0 && b.totalTime === 0) comparison = 0;
+            else if (a.totalTime === 0) comparison = 1;
+            else if (b.totalTime === 0) comparison = -1;
+            else comparison = sortOrder === "asc" ? a.totalTime - b.totalTime : b.totalTime - a.totalTime;
+            return comparison;
+          }
           case "participationCount":
             comparison = a.participationCount - b.participationCount;
             break;
@@ -141,6 +158,13 @@ export const ParticipantStatistics = () => {
             }
             break;
           }
+          case "averagePace": {
+            if (a.averagePace === 0 && b.averagePace === 0) comparison = 0;
+            else if (a.averagePace === 0) comparison = 1;
+            else if (b.averagePace === 0) comparison = -1;
+            else comparison = sortOrder === "asc" ? a.averagePace - b.averagePace : b.averagePace - a.averagePace;
+            return comparison;
+          }
         }
         return sortOrder === "asc" ? comparison : -comparison;
       });
@@ -168,7 +192,7 @@ export const ParticipantStatistics = () => {
           }}
         />
       </Stack>
-      <CommonTableContainer>
+      <CommonTableContainer sx={{ overflowX: "auto" }}>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
@@ -206,6 +230,38 @@ export const ParticipantStatistics = () => {
               </TableCell>
               <TableCell align="right">
                 <TableSortLabel
+                  active={sortField === "averagePace"}
+                  direction={sortField === "averagePace" ? sortOrder : "asc"}
+                  onClick={() => handleSort("averagePace")}>
+                  ø Pace
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="right">
+                <TableSortLabel
+                  active={sortField === "bestRank"}
+                  direction={sortField === "bestRank" ? sortOrder : "asc"}
+                  onClick={() => handleSort("bestRank")}>
+                  Bester Rang
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="right">
+                <TableSortLabel
+                  active={sortField === "averageRank"}
+                  direction={sortField === "averageRank" ? sortOrder : "asc"}
+                  onClick={() => handleSort("averageRank")}>
+                  ø Rang
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="right">
+                <TableSortLabel
+                  active={sortField === "tracks"}
+                  direction={sortField === "tracks" ? sortOrder : "asc"}
+                  onClick={() => handleSort("tracks")}>
+                  Strecken
+                </TableSortLabel>
+              </TableCell>
+              <TableCell align="right">
+                <TableSortLabel
                   active={sortField === "participationCount"}
                   direction={sortField === "participationCount" ? sortOrder : "asc"}
                   onClick={() => handleSort("participationCount")}>
@@ -228,30 +284,6 @@ export const ParticipantStatistics = () => {
                   Disqualifiziert
                 </TableSortLabel>
               </TableCell>
-              <TableCell align="right">
-                <TableSortLabel
-                  active={sortField === "tracks"}
-                  direction={sortField === "tracks" ? sortOrder : "asc"}
-                  onClick={() => handleSort("tracks")}>
-                  Strecken
-                </TableSortLabel>
-              </TableCell>
-              <TableCell align="right">
-                <TableSortLabel
-                  active={sortField === "bestRank"}
-                  direction={sortField === "bestRank" ? sortOrder : "asc"}
-                  onClick={() => handleSort("bestRank")}>
-                  Bester Rang
-                </TableSortLabel>
-              </TableCell>
-              <TableCell align="right">
-                <TableSortLabel
-                  active={sortField === "averageRank"}
-                  direction={sortField === "averageRank" ? sortOrder : "asc"}
-                  onClick={() => handleSort("averageRank")}>
-                  Durchschnitt
-                </TableSortLabel>
-              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -267,14 +299,15 @@ export const ParticipantStatistics = () => {
                 <TableCell align="right">{stat.totalDistance.toFixed(1)}km</TableCell>
                 <TableCell align="right">{stat.totalAltitude}m</TableCell>
                 <TableCell align="right">{formatTime(stat.totalTime)}</TableCell>
-                <TableCell align="right">{stat.participationCount}</TableCell>
-                <TableCell align="right">{stat.completedRaces}</TableCell>
-                <TableCell align="right">{stat.disqualifiedRaces}</TableCell>
+                <TableCell align="right">{formatPace(stat.averagePace)}</TableCell>
+                <TableCell align="right">{stat.bestRank ?? "-"}</TableCell>
+                <TableCell align="right">{stat.averageRank ?? "-"}</TableCell>
                 <TableCell align="right">
                   {[...new Set(stat.races.map(r => r.track))].sort((a, b) => a - b).join(", ")}
                 </TableCell>
-                <TableCell align="right">{stat.bestRank ?? "-"}</TableCell>
-                <TableCell align="right">{stat.averageRank ?? "-"}</TableCell>
+                <TableCell align="right">{stat.participationCount}</TableCell>
+                <TableCell align="right">{stat.completedRaces}</TableCell>
+                <TableCell align="right">{stat.disqualifiedRaces}</TableCell>
               </TableRow>
             ))}
           </TableBody>
