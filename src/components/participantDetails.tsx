@@ -197,6 +197,12 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
             </Box>
             <Box>
               <Typography variant="subtitle2" color="text.secondary">
+                Gesamthöhenmeter
+              </Typography>
+              <Typography variant="h6">{participant.totalAltitude.toFixed(0)} m</Typography>
+            </Box>
+            <Box>
+              <Typography variant="subtitle2" color="text.secondary">
                 Gesamtzeit
               </Typography>
               <Typography variant="h6">{formatTime(participant.totalTime)}</Typography>
@@ -217,7 +223,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
           <Box
             sx={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gridTemplateColumns: "repeat(5, 1fr)",
               gap: 2,
               [theme.breakpoints.down("sm")]: {
                 gridTemplateColumns: "repeat(2, 1fr)",
@@ -242,6 +248,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
               </Typography>
               <Typography variant="h6">{participant.disqualifiedRaces}</Typography>
             </Box>
+            <Box></Box>
             <Box></Box>
           </Box>
         </Stack>
