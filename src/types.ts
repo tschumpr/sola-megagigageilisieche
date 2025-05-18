@@ -39,7 +39,7 @@ export interface Race {
   year: number;
   track: number;
   distance: number;
-  altitude: number | null;
+  altitude: number;
   time: number;
   rank: number | null;
   isDisqualified: boolean;
@@ -58,6 +58,7 @@ export interface ParticipantStats {
   bestRank: number | null;
   averageRank: number | null;
   races: Race[];
+  averagePace: number; // min/km
 }
 
 export interface TeamStats {

@@ -151,7 +151,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
 
   const formatPace = (pace: number | undefined): string => {
     if (pace === undefined) return "-";
-    return `${pace.toFixed(2)} min/km`;
+    return `${pace.toFixed(2)}min/km`;
   };
 
   const renderTooltip = (props: TooltipProps<number, string>) => {
@@ -303,7 +303,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
                   active={sortField === "pace"}
                   direction={sortField === "pace" ? sortOrder : "asc"}
                   onClick={() => handleSort("pace")}>
-                  Pace (min/km)
+                  Pace
                 </TableSortLabel>
               </TableCell>
               <TableCell align="right">
@@ -321,8 +321,8 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
               <TableRow key={index}>
                 <TableCell>{race.year}</TableCell>
                 <TableCell>{race.track}</TableCell>
-                <TableCell align="right">{race.distance.toFixed(1)}</TableCell>
-                <TableCell align="right">{race.altitude !== null ? race.altitude.toFixed(0) : "-"}</TableCell>
+                <TableCell align="right">{race.distance.toFixed(1)}km</TableCell>
+                <TableCell align="right">{race.altitude.toFixed(0) + "m"}</TableCell>
                 <TableCell align="right">
                   {race.isDisqualified ? (
                     <Typography color="error">Disqualifiziert</Typography>

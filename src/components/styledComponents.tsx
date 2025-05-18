@@ -12,6 +12,7 @@ export const CommonTableContainer = styled(TableContainer)(({ theme }) => ({
     padding: theme.spacing(1.5),
     height: 24,
     borderBottom: `1px solid ${theme.palette.divider}`,
+    whiteSpace: "nowrap",
   },
   "& .MuiTableHead-root .MuiTableCell-root": {
     backgroundColor: theme.palette.secondary.main,
