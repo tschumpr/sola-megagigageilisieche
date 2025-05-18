@@ -1,0 +1,15 @@
+{
+    "bracketSameLine": true,
+    "trailingComma": "all",
+    "arrowParens": "avoid",
+    "printWidth": 120,
+    "endOfLine": "auto",
+    "plugins": ["prettier-plugin-sort-json", "@ianvs/prettier-plugin-sort-imports"],
+    "importOrder": [
+        "<BUILTIN_MODULES>",
+        "^react.*$",
+        "^@mui.*$",
+        "<THIRD_PARTY_MODULES>",
+        "^[./]"
+    ]
+}

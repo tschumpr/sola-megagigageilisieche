@@ -1,27 +1,27 @@
-import { createTheme } from '@mui/material';
+import { createTheme } from "@mui/material";
 
 export const theme = createTheme({
   palette: {
-    mode: 'light',
+    mode: "light",
     primary: {
-      main: 'rgb(51, 243, 51)',
-      contrastText: 'rgb(0, 0, 0)',
+      main: "rgb(51, 243, 51)",
+      contrastText: "rgb(0, 0, 0)",
     },
     secondary: {
-      main: 'rgb(245, 0, 87)',
-      contrastText: 'rgb(255, 255, 255)',
+      main: "rgb(245, 0, 87)",
+      contrastText: "rgb(255, 255, 255)",
     },
     error: {
-      main: 'rgb(255, 38, 43)',
+      main: "rgb(255, 38, 43)",
     },
     warning: {
-      main: 'rgb(255, 137, 46)',
+      main: "rgb(255, 137, 46)",
     },
     success: {
-      main: 'rgb(0, 218, 9)',
+      main: "rgb(0, 218, 9)",
     },
     info: {
-      main: 'rgb(0, 165, 255)',
+      main: "rgb(0, 165, 255)",
     },
   },
 });

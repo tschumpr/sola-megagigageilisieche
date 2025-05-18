@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, useTheme, Stack } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Box, Stack, Typography, useTheme } from "@mui/material";
 
 const correctSequence = [1, 3, 4, 8];
-const CAPTCHA_COMPLETED_KEY = 'captcha_completed';
+const CAPTCHA_COMPLETED_KEY = "captcha_completed";
 
 export const LandingPage: React.FC = () => {
   const [selectedImages, setSelectedImages] = useState<number[]>([]);
@@ -29,10 +29,10 @@ export const LandingPage: React.FC = () => {
     if (selectedImages.length === correctSequence.length) {
       const isCorrect = selectedImages.every((num, index) => num === correctSequence[index]);
       if (isCorrect) {
-        localStorage.setItem(CAPTCHA_COMPLETED_KEY, 'true');
+        localStorage.setItem(CAPTCHA_COMPLETED_KEY, "true");
         navigate(`${import.meta.env.BASE_URL}statistics`);
       } else {
-        setError('Falsche Reihenfolge. Versuch es erneut.');
+        setError("Falsche Reihenfolge. Versuch es erneut.");
         setSelectedImages([]);
       }
     }
@@ -43,62 +43,59 @@ export const LandingPage: React.FC = () => {
       sx={{
         height: `calc(100vh - ${theme.spacing(12)})`,
         "@supports (height: 100dvh)": {
-          height: `calc(100dvh - ${theme.spacing(12)})`
+          height: `calc(100dvh - ${theme.spacing(12)})`,
         },
-        alignItems: 'center',
-        justifyContent: 'center',
+        alignItems: "center",
+        justifyContent: "center",
         p: 3,
         bgcolor: theme.palette.primary.main,
-      }}
-    >
+      }}>
       {error && (
         <Typography color="error" align="center">
           {error}
         </Typography>
       )}
 
-      <Box sx={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: 2,
-        maxWidth: 600,
-        width: '100%',
-        aspectRatio: '1',
-        pt: error ? 0 : 3,
-      }}>
-        {shuffledImages.map((num) => (
+      <Box
+        sx={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: 2,
+          maxWidth: 600,
+          width: "100%",
+          aspectRatio: "1",
+          pt: error ? 0 : 3,
+        }}>
+        {shuffledImages.map(num => (
           <Box
             key={num}
             sx={{
               position: "relative",
-              width: '100%',
-              aspectRatio: '1',
-              cursor: 'pointer',
-              border: isImageSelected(num)
-                ? `3px solid ${theme.palette.primary.dark}`
-                : '3px solid transparent',
+              width: "100%",
+              aspectRatio: "1",
+              cursor: "pointer",
+              border: isImageSelected(num) ? `3px solid ${theme.palette.primary.dark}` : "3px solid transparent",
               borderRadius: 1,
-              transition: 'all 0.2s ease',
-              '&:hover': {
+              transition: "all 0.2s ease",
+              "&:hover": {
                 borderColor: isImageSelected(num) ? theme.palette.primary.dark : theme.palette.secondary.light,
               },
-              '&:active': {
+              "&:active": {
                 borderColor: theme.palette.secondary.main,
               },
-              overflow: 'hidden',
+              overflow: "hidden",
             }}
-            onClick={() => handleImageClick(num)}
-          >
+            onClick={() => handleImageClick(num)}>
             <Box
               component="img"
               src={`${import.meta.env.BASE_URL}captcha/${num}.png`}
               alt={`Captcha ${num}`}
               sx={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
+                width: "100%",
+                height: "100%",
+                objectFit: "contain",
                 p: 1,
-                boxSizing: 'border-box',
+                boxSizing: "border-box",
               }}
             />
           </Box>
@@ -106,4 +103,4 @@ export const LandingPage: React.FC = () => {
       </Box>
     </Stack>
   );
-}; 
+};

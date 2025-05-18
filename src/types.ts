@@ -66,4 +66,4 @@ export interface TeamStats {
   rank: number | null;
   isDisqualified: boolean;
   isCancelled: boolean;
-} 
+}

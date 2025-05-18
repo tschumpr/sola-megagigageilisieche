@@ -1,9 +1,9 @@
-import { YearData, ParticipantStats, TeamStats, ParticipantStatsCalculation, Race } from '../types';
+import { ParticipantStats, ParticipantStatsCalculation, Race, TeamStats, YearData } from "../types";
 
 // Function to convert time string to minutes
 export const timeToMinutes = (time: string | null): number => {
   if (!time) return 0;
-  const [hours, minutes, seconds] = time.split(':').map(Number);
+  const [hours, minutes, seconds] = time.split(":").map(Number);
   return hours * 60 + minutes + seconds / 60;
 };
 
@@ -13,14 +13,14 @@ export const loadAllYearData = async (): Promise<YearData[]> => {
   const currentYear = new Date().getFullYear();
   const years = Array.from(
     { length: currentYear - 2014 + 2 }, // +2 to include current year and next year
-    (_, i) => 2014 + i
+    (_, i) => 2014 + i,
   );
 
-  const dataPromises = years.map(async (year) => {
+  const dataPromises = years.map(async year => {
     try {
       const response = await fetch(`${import.meta.env.BASE_URL}data/${year}.json`, {
         headers: {
-          'Cache-Control': 'no-cache',
+          "Cache-Control": "no-cache",
         },
       });
       if (!response.ok) {
@@ -33,7 +33,7 @@ export const loadAllYearData = async (): Promise<YearData[]> => {
       const data = await response.json();
       return { ...data, year };
     } catch (error) {
-      if (error instanceof Error && error.message.includes('404')) {
+      if (error instanceof Error && error.message.includes("404")) {
         // Skip years that don't have data yet
         return null;
       }
@@ -53,8 +53,8 @@ export const calculateParticipantStats = (allYearData: YearData[]): ParticipantS
   allYearData.forEach((yearData, yearIndex) => {
     const year = 2014 + yearIndex;
     const allRunsCancelled = yearData.runs.every(run => run.time === null && run.rank === null);
-    
-    yearData.runs.forEach((run) => {
+
+    yearData.runs.forEach(run => {
       const existingStats = statsMap.get(run.name) || {
         name: run.name,
         totalDistance: 0,
@@ -90,7 +90,7 @@ export const calculateParticipantStats = (allYearData: YearData[]): ParticipantS
           rank: run.rank,
           isDisqualified: run.time === null && run.rank === null,
           isCancelled: false,
-          pace
+          pace,
         });
 
         if (run.time === null && run.rank === null) {
@@ -124,7 +124,7 @@ export const calculateTeamStats = (allYearData: YearData[]): TeamStats[] => {
   return allYearData.map((yearData, index) => {
     const hasCompletedRuns = yearData.runs.some(run => run.time !== null);
     const allRunsCancelled = yearData.runs.every(run => run.time === null && run.rank === null);
-    
+
     return {
       year: 2014 + index,
       category: yearData.total.category,
@@ -134,4 +134,4 @@ export const calculateTeamStats = (allYearData: YearData[]): TeamStats[] => {
       isCancelled: yearData.total.time === null && yearData.total.rank === null && allRunsCancelled,
     };
   });
-}; 
+};
