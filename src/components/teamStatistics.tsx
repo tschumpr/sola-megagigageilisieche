@@ -91,18 +91,26 @@ export const TeamStatistics = () => {
     return teamStats
       .filter(stat => !stat.isCancelled && !stat.isDisqualified)
       .sort((a, b) => a.year - b.year) // Always sort by year ascending
-      .map(stat => ({
-        year: stat.year,
-        time: stat.totalTime ? timeToMinutes(stat.totalTime) : null,
-        rank: stat.rank,
-        timeFormatted: stat.totalTime ? formatTime(stat.totalTime) : null,
-      }));
-  }, [teamStats]); // Only depend on teamStats, not sortedStats
+      .map(stat => {
+        const yearDataItem = yearData.find(data => data.year === stat.year);
+        return {
+          year: stat.year,
+          time: stat.totalTime ? timeToMinutes(stat.totalTime) : null,
+          rank: stat.rank,
+          participants: yearDataItem?.participants,
+          timeFormatted: stat.totalTime ? formatTime(stat.totalTime) : null,
+        };
+      });
+  }, [teamStats, yearData]);
 
   const formatAxisTime = (value: number) => {
     const hours = Math.floor(value / 60);
     const minutes = Math.floor(value % 60);
     return `${hours}:${minutes.toString().padStart(2, "0")}`;
+  };
+
+  const formatAxisRank = (value: number) => {
+    return value.toString();
   };
 
   // Calculate min and max time for the axis
@@ -120,12 +128,8 @@ export const TeamStatistics = () => {
     return (
       <Box sx={{ bgcolor: "background.paper", p: 1, border: "1px solid", borderColor: "divider" }}>
         <Typography variant="body2">{`${data.year}`}</Typography>
-        <Typography variant="body2" color="primary">
-          {`Rang: ${data.rank ?? "-"}`}
-        </Typography>
-        <Typography variant="body2" color="secondary">
-          {`Zeit: ${data.timeFormatted ?? "-"}`}
-        </Typography>
+        <Typography variant="body2" color="primary">{`Rang: ${data.rank ?? "-"} von ${data.participants}`}</Typography>
+        <Typography variant="body2" color="secondary">{`Zeit: ${data.timeFormatted ?? "-"}`}</Typography>
       </Box>
     );
   };
@@ -135,23 +139,42 @@ export const TeamStatistics = () => {
       <Paper sx={{ p: 2, mb: 2 }}>
         <Box sx={{ width: "100%", height: 250 }}>
           <ResponsiveContainer>
-            <ComposedChart data={chartData}>
+            <ComposedChart data={chartData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="year" />
+              <XAxis
+                dataKey="year"
+                label={{
+                  value: "Jahr",
+                  position: "insideBottom",
+                  offset: -5,
+                }}
+              />
               <YAxis
                 yAxisId="left"
                 orientation="left"
-                label={{ value: "Zeit", angle: -90, position: "insideLeft" }}
+                label={{
+                  value: "Zeit",
+                  angle: -90,
+                  position: "insideLeft",
+                  offset: 0,
+                }}
                 domain={[timeRange.min, timeRange.max]}
                 tickFormatter={formatAxisTime}
               />
               <YAxis
                 yAxisId="right"
                 orientation="right"
-                label={{ value: "Rang", angle: 90, position: "insideRight" }}
+                label={{
+                  value: "Rang",
+                  angle: 90,
+                  position: "insideRight",
+                  offset: 0,
+                }}
+                domain={[0, 1000]}
+                tickFormatter={formatAxisRank}
               />
               <Tooltip content={renderTooltip} />
-              <Legend />
+              <Legend wrapperStyle={{ paddingTop: 20 }} />
               <Bar yAxisId="right" dataKey="rank" name="Rang" fill={theme.palette.primary.main} />
               <Line
                 yAxisId="left"
