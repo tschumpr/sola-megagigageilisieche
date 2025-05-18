@@ -281,7 +281,11 @@ export const ParticipantStatistics = () => {
         </Table>
       </CommonTableContainer>
 
-      <CommonDialog open={!!selectedParticipant} onClose={handleCloseModal} title={selectedParticipant ?? ""} maxWidth="lg">
+      <CommonDialog
+        open={!!selectedParticipant}
+        onClose={handleCloseModal}
+        title={selectedParticipant ?? ""}
+        maxWidth="lg">
         {selectedParticipantData && <ParticipantDetails participant={selectedParticipantData} />}
       </CommonDialog>
     </>
