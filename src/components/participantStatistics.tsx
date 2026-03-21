@@ -281,7 +281,7 @@ export const ParticipantStatistics = () => {
                   active={sortField === "disqualifiedRaces"}
                   direction={sortField === "disqualifiedRaces" ? sortOrder : "asc"}
                   onClick={() => handleSort("disqualifiedRaces")}>
-                  Disqualifiziert
+                  Nicht rangiert
                 </TableSortLabel>
               </TableCell>
             </TableRow>

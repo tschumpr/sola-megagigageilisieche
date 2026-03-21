@@ -245,7 +245,7 @@ export const TeamStatistics = () => {
                   {stat.isCancelled ? (
                     <Chip label="Abgesagt" color="warning" />
                   ) : stat.isDisqualified ? (
-                    <Chip label="Disqualifiziert" color="error" />
+                    <Chip label="Nicht rangiert" color="error" />
                   ) : (
                     <Chip label="Erfolgreich" color="success" />
                   )}
