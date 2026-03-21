@@ -244,7 +244,7 @@ export const ParticipantDetails: FC<ParticipantDetailsProps> = ({ participant })
             </Box>
             <Box>
               <Typography variant="subtitle2" color="text.secondary">
-                Disqualifiziert
+                Nicht rangiert
               </Typography>
               <Typography variant="h6">{participant.disqualifiedRaces}</Typography>
             </Box>
